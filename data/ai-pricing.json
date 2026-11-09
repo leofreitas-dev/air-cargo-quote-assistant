@@ -1,0 +1,6 @@
+{
+  "note": "USD per million tokens. Claude Haiku 5.5, prompts up to 100K tokens. Source: Anthropic model table (claude-api reference, cached 2026-11-03), checked 2026-11-09.",
+  "models": {
+    "claude-haiku-5-5": { "inputPerMTok": 0.1, "outputPerMTok": 0.5 }
+  }
+}

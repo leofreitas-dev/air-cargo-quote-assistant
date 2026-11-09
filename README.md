@@ -10,9 +10,10 @@ Requires Node 24 or later.
 
 ```
 npm install
-npm test                                         # pricing and validation tests
+npm run demo                                     # the 10 demo emails, end to end, no API key needed
+npm test                                         # all tests
 npm run price -- GRU MIA 3x120x100x110cm 420kg   # price a shipment, step by step
 npm run airport -- "Sao Paulo Guarulhos" XXX     # how an airport written in an email is read
 ```
 
-All rates in `data/tariffs.json` are fictional. `data/airports.json` is a demo subset of real airports (public IATA data).
+All emails, companies and people in `data/demo/` are fictional (`.test` domains). All rates in `data/tariffs.json` are fictional. `data/airports.json` is a demo subset of real airports (public IATA data).

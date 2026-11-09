@@ -1,0 +1,55 @@
+{
+  "note": "Hand-written recording for demo mode (no API key needed). Same shape as a real response: raw model output plus token usage per attempt.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 1268,
+        "output_tokens": 318
+      },
+      "output": {
+        "isQuoteRequest": true,
+        "origin": "Miami (MIA)",
+        "destination": "Sao Paulo (GRU)",
+        "pieces": [
+          {
+            "count": 2,
+            "length": 48,
+            "width": 40,
+            "height": 40,
+            "unit": "in"
+          },
+          {
+            "count": 1,
+            "length": 30,
+            "width": 20,
+            "height": 20,
+            "unit": "in"
+          }
+        ],
+        "weight": {
+          "value": 410,
+          "unit": "kg",
+          "per": "total"
+        },
+        "cargoType": "general",
+        "cargoDescription": "auto parts",
+        "readyDate": "2026-11-11",
+        "urgent": false,
+        "sender": {
+          "name": "Mike Dalton",
+          "company": "Coral Bay Freight"
+        },
+        "confidence": {
+          "origin": 0.97,
+          "destination": 0.97,
+          "pieces": 0.95,
+          "weight": 0.96,
+          "cargoType": 0.95,
+          "readyDate": 0.86
+        }
+      }
+    }
+  ]
+}

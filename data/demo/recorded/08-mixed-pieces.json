@@ -1,0 +1,70 @@
+{
+  "note": "Hand-written recording for demo mode (no API key needed). Same shape as a real response: raw model output plus token usage per attempt. The first attempt was cut off (max_tokens), so the pipeline must retry.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "max_tokens",
+      "usage": {
+        "input_tokens": 1289,
+        "output_tokens": 160
+      },
+      "outputText": "{\"isQuoteRequest\": true, \"origin\": \"GIG\", \"destination\": \"MIA\", \"pieces\": [{\"count\": 2, \"length\": 80, \"width\": 60, \"height\": 50, \"unit\": \"cm\"}, {\"count\": 1, \"length\": 120, \"width\":"
+    },
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 1289,
+        "output_tokens": 412
+      },
+      "output": {
+        "isQuoteRequest": true,
+        "origin": "GIG",
+        "destination": "MIA",
+        "pieces": [
+          {
+            "count": 2,
+            "length": 80,
+            "width": 60,
+            "height": 50,
+            "unit": "cm"
+          },
+          {
+            "count": 1,
+            "length": 120,
+            "width": 80,
+            "height": 100,
+            "unit": "cm"
+          },
+          {
+            "count": 3,
+            "length": 150,
+            "width": 20,
+            "height": 20,
+            "unit": "cm"
+          }
+        ],
+        "weight": {
+          "value": 260,
+          "unit": "kg",
+          "per": "total"
+        },
+        "cargoType": "general",
+        "cargoDescription": "medical equipment, non-hazardous",
+        "readyDate": "2026-11-16",
+        "urgent": false,
+        "sender": {
+          "name": "Sofia Lindqvist",
+          "company": "Nordlys Medtech"
+        },
+        "confidence": {
+          "origin": 0.97,
+          "destination": 0.97,
+          "pieces": 0.9,
+          "weight": 0.96,
+          "cargoType": 0.93,
+          "readyDate": 0.94
+        }
+      }
+    }
+  ]
+}

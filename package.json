@@ -6,7 +6,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "price": "node src/cli/price.ts",
-    "airport": "node src/cli/airport.ts"
+    "airport": "node src/cli/airport.ts",
+    "demo": "node src/cli/demo.ts"
   },
   "license": "MIT",
   "type": "module",

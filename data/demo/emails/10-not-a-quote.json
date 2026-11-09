@@ -1,0 +1,7 @@
+{
+  "messageId": "<20261110.1230.b2@andorinha-logistica.test>",
+  "from": "billing@andorinha-logistica.test",
+  "subject": "Payment confirmation INV-2026-1187",
+  "receivedAt": "2026-11-10T12:30:00Z",
+  "body": "Hello,\n\nThis is to confirm that invoice INV-2026-1187 was paid today by bank transfer.\nPlease find the receipt attached.\n\nAndorinha Logistica - Billing"
+}

@@ -1,0 +1,48 @@
+{
+  "note": "Hand-written recording for demo mode (no API key needed). Same shape as a real response: raw model output plus token usage per attempt.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 1198,
+        "output_tokens": 301
+      },
+      "output": {
+        "isQuoteRequest": true,
+        "origin": "Miami",
+        "destination": "Sao Paulo",
+        "pieces": [
+          {
+            "count": 1,
+            "length": 100,
+            "width": 50,
+            "height": 40,
+            "unit": "cm"
+          }
+        ],
+        "weight": {
+          "value": 48,
+          "unit": "kg",
+          "per": "total"
+        },
+        "cargoType": null,
+        "cargoDescription": "aircraft part (AOG)",
+        "readyDate": "2026-11-10",
+        "urgent": true,
+        "sender": {
+          "name": null,
+          "company": "QuickWing"
+        },
+        "confidence": {
+          "origin": 0.9,
+          "destination": 0.88,
+          "pieces": 0.95,
+          "weight": 0.96,
+          "cargoType": 0.4,
+          "readyDate": 0.92
+        }
+      }
+    }
+  ]
+}

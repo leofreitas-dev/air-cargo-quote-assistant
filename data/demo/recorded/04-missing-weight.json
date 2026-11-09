@@ -1,0 +1,44 @@
+{
+  "note": "Hand-written recording for demo mode (no API key needed). Same shape as a real response: raw model output plus token usage per attempt.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 1244,
+        "output_tokens": 302
+      },
+      "output": {
+        "isQuoteRequest": true,
+        "origin": "GRU",
+        "destination": "Lisbon",
+        "pieces": [
+          {
+            "count": 2,
+            "length": 120,
+            "width": 80,
+            "height": 150,
+            "unit": "cm"
+          }
+        ],
+        "weight": null,
+        "cargoType": "general",
+        "cargoDescription": "roasted coffee",
+        "readyDate": null,
+        "urgent": false,
+        "sender": {
+          "name": "Paula Mendes",
+          "company": "Serra Azul Cafe"
+        },
+        "confidence": {
+          "origin": 0.97,
+          "destination": 0.97,
+          "pieces": 0.95,
+          "weight": 0.0,
+          "cargoType": 0.82,
+          "readyDate": 0.3
+        }
+      }
+    }
+  ]
+}

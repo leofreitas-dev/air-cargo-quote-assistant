@@ -1,0 +1,48 @@
+{
+  "note": "Hand-written recording for demo mode (no API key needed). Same shape as a real response: raw model output plus token usage per attempt.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 1262,
+        "output_tokens": 334
+      },
+      "output": {
+        "isQuoteRequest": true,
+        "origin": "VCP",
+        "destination": "MIA",
+        "pieces": [
+          {
+            "count": 5,
+            "length": 50,
+            "width": 40,
+            "height": 40,
+            "unit": "cm"
+          }
+        ],
+        "weight": {
+          "value": 85,
+          "unit": "kg",
+          "per": "total"
+        },
+        "cargoType": "dangerous",
+        "cargoDescription": "lithium ion batteries packed with equipment (UN3481)",
+        "readyDate": "2026-11-12",
+        "urgent": false,
+        "sender": {
+          "name": "Jun Tanaka",
+          "company": "Kestrel Electronics"
+        },
+        "confidence": {
+          "origin": 0.97,
+          "destination": 0.97,
+          "pieces": 0.95,
+          "weight": 0.96,
+          "cargoType": 0.96,
+          "readyDate": 0.87
+        }
+      }
+    }
+  ]
+}
