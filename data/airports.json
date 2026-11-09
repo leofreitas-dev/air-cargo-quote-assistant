@@ -1,0 +1,463 @@
+{
+ "note": "Demo subset of real airports (public IATA data). Not a complete list.",
+ "airports": [
+  {
+   "iata": "GRU",
+   "name": "Sao Paulo/Guarulhos International Airport",
+   "city": "Sao Paulo",
+   "country": "BR",
+   "aliases": [
+    "guarulhos",
+    "sao paulo guarulhos",
+    "guarulhos sao paulo",
+    "cumbica"
+   ]
+  },
+  {
+   "iata": "CGH",
+   "name": "Sao Paulo/Congonhas Airport",
+   "city": "Sao Paulo",
+   "country": "BR",
+   "aliases": [
+    "congonhas",
+    "sao paulo congonhas"
+   ]
+  },
+  {
+   "iata": "VCP",
+   "name": "Viracopos International Airport",
+   "city": "Campinas",
+   "country": "BR",
+   "aliases": [
+    "viracopos",
+    "campinas viracopos"
+   ]
+  },
+  {
+   "iata": "GIG",
+   "name": "Rio de Janeiro/Galeao International Airport",
+   "city": "Rio de Janeiro",
+   "country": "BR",
+   "aliases": [
+    "galeao",
+    "rio galeao",
+    "rio de janeiro galeao",
+    "tom jobim"
+   ]
+  },
+  {
+   "iata": "SDU",
+   "name": "Rio de Janeiro/Santos Dumont Airport",
+   "city": "Rio de Janeiro",
+   "country": "BR",
+   "aliases": [
+    "santos dumont"
+   ]
+  },
+  {
+   "iata": "CNF",
+   "name": "Belo Horizonte/Confins International Airport",
+   "city": "Belo Horizonte",
+   "country": "BR",
+   "aliases": [
+    "confins",
+    "belo horizonte confins"
+   ]
+  },
+  {
+   "iata": "CWB",
+   "name": "Curitiba/Afonso Pena International Airport",
+   "city": "Curitiba",
+   "country": "BR",
+   "aliases": [
+    "afonso pena"
+   ]
+  },
+  {
+   "iata": "POA",
+   "name": "Porto Alegre/Salgado Filho International Airport",
+   "city": "Porto Alegre",
+   "country": "BR",
+   "aliases": [
+    "salgado filho"
+   ]
+  },
+  {
+   "iata": "MAO",
+   "name": "Manaus/Eduardo Gomes International Airport",
+   "city": "Manaus",
+   "country": "BR",
+   "aliases": [
+    "eduardo gomes"
+   ]
+  },
+  {
+   "iata": "REC",
+   "name": "Recife/Guararapes International Airport",
+   "city": "Recife",
+   "country": "BR",
+   "aliases": [
+    "guararapes"
+   ]
+  },
+  {
+   "iata": "MIA",
+   "name": "Miami International Airport",
+   "city": "Miami",
+   "country": "US",
+   "aliases": [
+    "miami fl",
+    "miami florida"
+   ]
+  },
+  {
+   "iata": "JFK",
+   "name": "New York John F. Kennedy International Airport",
+   "city": "New York",
+   "country": "US",
+   "aliases": [
+    "john f kennedy",
+    "kennedy",
+    "new york jfk",
+    "new york kennedy"
+   ]
+  },
+  {
+   "iata": "EWR",
+   "name": "Newark Liberty International Airport",
+   "city": "Newark",
+   "country": "US",
+   "aliases": [
+    "newark liberty",
+    "new york newark"
+   ]
+  },
+  {
+   "iata": "LGA",
+   "name": "New York LaGuardia Airport",
+   "city": "New York",
+   "country": "US",
+   "aliases": [
+    "laguardia",
+    "la guardia"
+   ]
+  },
+  {
+   "iata": "LAX",
+   "name": "Los Angeles International Airport",
+   "city": "Los Angeles",
+   "country": "US",
+   "aliases": [
+    "los angeles ca"
+   ]
+  },
+  {
+   "iata": "ORD",
+   "name": "Chicago O'Hare International Airport",
+   "city": "Chicago",
+   "country": "US",
+   "aliases": [
+    "o hare",
+    "ohare",
+    "chicago o hare",
+    "chicago ohare"
+   ]
+  },
+  {
+   "iata": "ATL",
+   "name": "Atlanta Hartsfield-Jackson International Airport",
+   "city": "Atlanta",
+   "country": "US",
+   "aliases": [
+    "hartsfield jackson"
+   ]
+  },
+  {
+   "iata": "DFW",
+   "name": "Dallas/Fort Worth International Airport",
+   "city": "Dallas",
+   "country": "US",
+   "aliases": [
+    "dallas fort worth"
+   ]
+  },
+  {
+   "iata": "IAH",
+   "name": "Houston George Bush Intercontinental Airport",
+   "city": "Houston",
+   "country": "US",
+   "aliases": [
+    "george bush intercontinental"
+   ]
+  },
+  {
+   "iata": "MEX",
+   "name": "Mexico City International Airport",
+   "city": "Mexico City",
+   "country": "MX",
+   "aliases": [
+    "benito juarez",
+    "ciudad de mexico"
+   ]
+  },
+  {
+   "iata": "BOG",
+   "name": "Bogota El Dorado International Airport",
+   "city": "Bogota",
+   "country": "CO",
+   "aliases": [
+    "el dorado"
+   ]
+  },
+  {
+   "iata": "LIM",
+   "name": "Lima Jorge Chavez International Airport",
+   "city": "Lima",
+   "country": "PE",
+   "aliases": [
+    "jorge chavez"
+   ]
+  },
+  {
+   "iata": "SCL",
+   "name": "Santiago Arturo Merino Benitez International Airport",
+   "city": "Santiago",
+   "country": "CL",
+   "aliases": [
+    "arturo merino benitez",
+    "santiago de chile"
+   ]
+  },
+  {
+   "iata": "EZE",
+   "name": "Buenos Aires Ezeiza International Airport",
+   "city": "Buenos Aires",
+   "country": "AR",
+   "aliases": [
+    "ezeiza",
+    "ministro pistarini"
+   ]
+  },
+  {
+   "iata": "AEP",
+   "name": "Buenos Aires Jorge Newbery Airfield",
+   "city": "Buenos Aires",
+   "country": "AR",
+   "aliases": [
+    "aeroparque",
+    "jorge newbery"
+   ]
+  },
+  {
+   "iata": "MVD",
+   "name": "Montevideo Carrasco International Airport",
+   "city": "Montevideo",
+   "country": "UY",
+   "aliases": [
+    "carrasco"
+   ]
+  },
+  {
+   "iata": "LIS",
+   "name": "Lisbon Humberto Delgado Airport",
+   "city": "Lisbon",
+   "country": "PT",
+   "aliases": [
+    "lisboa",
+    "humberto delgado"
+   ]
+  },
+  {
+   "iata": "OPO",
+   "name": "Porto Francisco Sa Carneiro Airport",
+   "city": "Porto",
+   "country": "PT",
+   "aliases": [
+    "francisco sa carneiro"
+   ]
+  },
+  {
+   "iata": "MAD",
+   "name": "Madrid Barajas Airport",
+   "city": "Madrid",
+   "country": "ES",
+   "aliases": [
+    "barajas",
+    "adolfo suarez"
+   ]
+  },
+  {
+   "iata": "BCN",
+   "name": "Barcelona El Prat Airport",
+   "city": "Barcelona",
+   "country": "ES",
+   "aliases": [
+    "el prat"
+   ]
+  },
+  {
+   "iata": "FRA",
+   "name": "Frankfurt Airport",
+   "city": "Frankfurt",
+   "country": "DE",
+   "aliases": [
+    "frankfurt am main",
+    "frankfurt main"
+   ]
+  },
+  {
+   "iata": "CDG",
+   "name": "Paris Charles de Gaulle Airport",
+   "city": "Paris",
+   "country": "FR",
+   "aliases": [
+    "charles de gaulle",
+    "roissy"
+   ]
+  },
+  {
+   "iata": "ORY",
+   "name": "Paris Orly Airport",
+   "city": "Paris",
+   "country": "FR",
+   "aliases": [
+    "orly"
+   ]
+  },
+  {
+   "iata": "AMS",
+   "name": "Amsterdam Schiphol Airport",
+   "city": "Amsterdam",
+   "country": "NL",
+   "aliases": [
+    "schiphol"
+   ]
+  },
+  {
+   "iata": "LHR",
+   "name": "London Heathrow Airport",
+   "city": "London",
+   "country": "GB",
+   "aliases": [
+    "heathrow"
+   ]
+  },
+  {
+   "iata": "LGW",
+   "name": "London Gatwick Airport",
+   "city": "London",
+   "country": "GB",
+   "aliases": [
+    "gatwick"
+   ]
+  },
+  {
+   "iata": "FCO",
+   "name": "Rome Fiumicino Airport",
+   "city": "Rome",
+   "country": "IT",
+   "aliases": [
+    "fiumicino",
+    "leonardo da vinci",
+    "roma"
+   ]
+  },
+  {
+   "iata": "MXP",
+   "name": "Milan Malpensa Airport",
+   "city": "Milan",
+   "country": "IT",
+   "aliases": [
+    "malpensa",
+    "milano malpensa"
+   ]
+  },
+  {
+   "iata": "LIE",
+   "name": "Liege Airport",
+   "city": "Liege",
+   "country": "BE",
+   "aliases": []
+  },
+  {
+   "iata": "DXB",
+   "name": "Dubai International Airport",
+   "city": "Dubai",
+   "country": "AE",
+   "aliases": []
+  },
+  {
+   "iata": "DOH",
+   "name": "Doha Hamad International Airport",
+   "city": "Doha",
+   "country": "QA",
+   "aliases": [
+    "hamad"
+   ]
+  },
+  {
+   "iata": "HKG",
+   "name": "Hong Kong International Airport",
+   "city": "Hong Kong",
+   "country": "HK",
+   "aliases": [
+    "chek lap kok"
+   ]
+  },
+  {
+   "iata": "PVG",
+   "name": "Shanghai Pudong International Airport",
+   "city": "Shanghai",
+   "country": "CN",
+   "aliases": [
+    "pudong"
+   ]
+  },
+  {
+   "iata": "NRT",
+   "name": "Tokyo Narita International Airport",
+   "city": "Tokyo",
+   "country": "JP",
+   "aliases": [
+    "narita"
+   ]
+  },
+  {
+   "iata": "HND",
+   "name": "Tokyo Haneda Airport",
+   "city": "Tokyo",
+   "country": "JP",
+   "aliases": [
+    "haneda"
+   ]
+  },
+  {
+   "iata": "ICN",
+   "name": "Seoul Incheon International Airport",
+   "city": "Seoul",
+   "country": "KR",
+   "aliases": [
+    "incheon"
+   ]
+  },
+  {
+   "iata": "SIN",
+   "name": "Singapore Changi Airport",
+   "city": "Singapore",
+   "country": "SG",
+   "aliases": [
+    "changi"
+   ]
+  },
+  {
+   "iata": "JNB",
+   "name": "Johannesburg O.R. Tambo International Airport",
+   "city": "Johannesburg",
+   "country": "ZA",
+   "aliases": [
+    "or tambo",
+    "o r tambo"
+   ]
+  }
+ ]
+}

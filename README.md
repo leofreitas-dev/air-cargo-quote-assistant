@@ -10,8 +10,9 @@ Requires Node 24 or later.
 
 ```
 npm install
-npm test                                         # pricing tests
+npm test                                         # pricing and validation tests
 npm run price -- GRU MIA 3x120x100x110cm 420kg   # price a shipment, step by step
+npm run airport -- "Sao Paulo Guarulhos" XXX     # how an airport written in an email is read
 ```
 
-All rates in `data/tariffs.json` are fictional.
+All rates in `data/tariffs.json` are fictional. `data/airports.json` is a demo subset of real airports (public IATA data).
