@@ -1,0 +1,90 @@
+{
+  "name": "Demo Air Rates (fictional)",
+  "currency": "USD",
+  "surcharges": [
+    { "code": "FSC", "name": "Fuel surcharge", "ratePerKg": 0.85 },
+    { "code": "SSC", "name": "Security surcharge", "ratePerKg": 0.15 }
+  ],
+  "routes": [
+    {
+      "origin": "GRU", "destination": "MIA", "minimumCharge": 75,
+      "breaks": [
+        { "label": "N", "minKg": 0, "ratePerKg": 4.8 },
+        { "label": "+45", "minKg": 45, "ratePerKg": 4.1 },
+        { "label": "+100", "minKg": 100, "ratePerKg": 3.6 },
+        { "label": "+300", "minKg": 300, "ratePerKg": 3.3 },
+        { "label": "+500", "minKg": 500, "ratePerKg": 3.1 }
+      ]
+    },
+    {
+      "origin": "GRU", "destination": "JFK", "minimumCharge": 80,
+      "breaks": [
+        { "label": "N", "minKg": 0, "ratePerKg": 5.2 },
+        { "label": "+45", "minKg": 45, "ratePerKg": 4.45 },
+        { "label": "+100", "minKg": 100, "ratePerKg": 3.95 },
+        { "label": "+300", "minKg": 300, "ratePerKg": 3.6 },
+        { "label": "+500", "minKg": 500, "ratePerKg": 3.35 }
+      ]
+    },
+    {
+      "origin": "GRU", "destination": "LIS", "minimumCharge": 85,
+      "breaks": [
+        { "label": "N", "minKg": 0, "ratePerKg": 5.6 },
+        { "label": "+45", "minKg": 45, "ratePerKg": 4.75 },
+        { "label": "+100", "minKg": 100, "ratePerKg": 4.2 },
+        { "label": "+300", "minKg": 300, "ratePerKg": 3.85 },
+        { "label": "+500", "minKg": 500, "ratePerKg": 3.6 }
+      ]
+    },
+    {
+      "origin": "GRU", "destination": "FRA", "minimumCharge": 90,
+      "breaks": [
+        { "label": "N", "minKg": 0, "ratePerKg": 5.9 },
+        { "label": "+45", "minKg": 45, "ratePerKg": 5.0 },
+        { "label": "+100", "minKg": 100, "ratePerKg": 4.4 },
+        { "label": "+300", "minKg": 300, "ratePerKg": 4.05 },
+        { "label": "+500", "minKg": 500, "ratePerKg": 3.8 }
+      ]
+    },
+    {
+      "origin": "VCP", "destination": "MIA", "minimumCharge": 75,
+      "breaks": [
+        { "label": "N", "minKg": 0, "ratePerKg": 4.65 },
+        { "label": "+45", "minKg": 45, "ratePerKg": 3.95 },
+        { "label": "+100", "minKg": 100, "ratePerKg": 3.5 },
+        { "label": "+300", "minKg": 300, "ratePerKg": 3.2 },
+        { "label": "+500", "minKg": 500, "ratePerKg": 3.0 }
+      ]
+    },
+    {
+      "origin": "GIG", "destination": "MIA", "minimumCharge": 75,
+      "breaks": [
+        { "label": "N", "minKg": 0, "ratePerKg": 4.95 },
+        { "label": "+45", "minKg": 45, "ratePerKg": 4.25 },
+        { "label": "+100", "minKg": 100, "ratePerKg": 3.75 },
+        { "label": "+300", "minKg": 300, "ratePerKg": 3.4 },
+        { "label": "+500", "minKg": 500, "ratePerKg": 3.2 }
+      ]
+    },
+    {
+      "origin": "MIA", "destination": "GRU", "minimumCharge": 75,
+      "breaks": [
+        { "label": "N", "minKg": 0, "ratePerKg": 4.4 },
+        { "label": "+45", "minKg": 45, "ratePerKg": 3.8 },
+        { "label": "+100", "minKg": 100, "ratePerKg": 3.35 },
+        { "label": "+300", "minKg": 300, "ratePerKg": 3.05 },
+        { "label": "+500", "minKg": 500, "ratePerKg": 2.85 }
+      ]
+    },
+    {
+      "origin": "GRU", "destination": "EZE", "minimumCharge": 60,
+      "breaks": [
+        { "label": "N", "minKg": 0, "ratePerKg": 2.9 },
+        { "label": "+45", "minKg": 45, "ratePerKg": 2.45 },
+        { "label": "+100", "minKg": 100, "ratePerKg": 2.15 },
+        { "label": "+300", "minKg": 300, "ratePerKg": 1.95 },
+        { "label": "+500", "minKg": 500, "ratePerKg": 1.8 }
+      ]
+    }
+  ]
+}
