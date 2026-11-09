@@ -459,5 +459,27 @@
     "o r tambo"
    ]
   }
- ]
+ ],
+ "cargoCities": {
+  "note": "How a bare city name is read for air cargo. One airport: assumed, and the reply says so. Several: the reply asks which one. Cities not listed here fall back to the airports' city field.",
+  "cities": [
+   {
+    "city": "Sao Paulo",
+    "airports": [
+     "GRU"
+    ],
+    "alternatives": [
+     "VCP"
+    ]
+   },
+   {
+    "city": "New York",
+    "airports": [
+     "JFK",
+     "EWR"
+    ],
+    "alternatives": []
+   }
+  ]
+ }
 }

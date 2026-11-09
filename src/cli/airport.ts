@@ -12,7 +12,10 @@ if (inputs.length === 0) {
 for (const input of inputs) {
   const m = resolveAirport(input);
   const label = `"${input}"`.padEnd(30);
-  if (m.ok) console.log(`${label} -> ${m.airport.iata}  ${m.airport.name}  (matched by ${m.method})`);
+  if (m.ok && m.method === 'assumed') {
+    const alt = m.alternatives.map((a) => a.iata).join(', ');
+    console.log(`${label} -> ${m.airport.iata}  ${m.airport.name}  (ASSUMED main cargo airport${alt ? `; alternative: ${alt}` : ''})`);
+  } else if (m.ok) console.log(`${label} -> ${m.airport.iata}  ${m.airport.name}  (matched by ${m.method})`);
   else if (m.reason === 'ambiguous') {
     console.log(`${label} -> AMBIGUOUS: ${m.candidates.map((a) => `${a.iata} ${a.name}`).join(' | ')}`);
   } else console.log(`${label} -> UNKNOWN: not a known airport`);

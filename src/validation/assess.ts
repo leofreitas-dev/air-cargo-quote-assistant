@@ -8,7 +8,7 @@ import type { ConfidenceField, Extraction } from '../domain/extraction.ts';
 import type { Piece, Weight } from '../pricing/chargeable-weight.ts';
 import { priceShipment, type Quote, type QuoteRequest } from '../pricing/quote.ts';
 import { loadDefaultTariffs, type TariffTable } from '../pricing/tariffs.ts';
-import { resolveAirport, type Airport, type AirportMatch } from './airports.ts';
+import { resolveAirport, shortName, type Airport, type AirportMatch } from './airports.ts';
 import { checkDuplicate, fingerprint, type PreviousRequest } from './duplicates.ts';
 
 /** What happens next. */
@@ -34,6 +34,7 @@ export type FlagCode =
   | 'ready_date_in_past'
   | 'cargo_type_assumed'
   | 'airport_read_from_name'
+  | 'airport_assumed'
   | 'urgent';
 
 export interface Flag {
@@ -51,6 +52,8 @@ export interface Assessment {
   priority: 'urgent' | 'normal';
   flags: Flag[];
   missingFields: RequiredField[];
+  /** Customer-facing sentences the reply must include, e.g. "Quoted ex GRU; ...". */
+  assumptions: string[];
   origin: Airport | null;
   destination: Airport | null;
   /** Ready to price: totals, airports resolved. Null when something is missing. */
@@ -84,9 +87,30 @@ export function totalWeight(weight: NonNullable<Extraction['weight']>, pieces: P
   return { value: weight.value * count, unit: weight.unit };
 }
 
+/** The sentence the reply uses when a city was read as its main cargo airport. */
+export function airportAssumption(side: 'Origin' | 'Destination', airport: Airport, alternatives: Airport[]): string {
+  const quoted = side === 'Origin' ? `Quoted ex ${airport.iata}` : `Quoted to ${airport.iata}`;
+  if (alternatives.length === 0) return `${quoted}; if you need a different airport, let us know.`;
+  const alt = alternatives.map((a) => `${shortName(a)} (${a.iata})`).join(' or ');
+  return side === 'Origin'
+    ? `${quoted}; if the cargo ships from ${alt}, let us know.`
+    : `${quoted}; if the cargo goes to ${alt}, let us know.`;
+}
+
 function airportFlag(side: 'Origin' | 'Destination', match: AirportMatch): Flag | null {
   if (match.ok) {
     if (match.method === 'code') return null;
+    if (match.method === 'assumed') {
+      const alt = match.alternatives.map((a) => `${a.iata} (${a.name})`).join(', ');
+      return {
+        code: 'airport_assumed',
+        severity: 'info',
+        message:
+          `${side} "${match.input}" assumed to be ${match.airport.iata}, the main cargo airport` +
+          (alt ? `; could also be ${alt}` : '') +
+          '. The reply states this assumption',
+      };
+    }
     return {
       code: 'airport_read_from_name',
       severity: 'info',
@@ -127,7 +151,7 @@ export function assess(email: IncomingEmail, extraction: Extraction, options: As
     readyDate: x.readyDate,
   });
 
-  const base = { origin, destination, fingerprint: fp, missingFields: [] as RequiredField[] };
+  const base = { origin, destination, fingerprint: fp, missingFields: [] as RequiredField[], assumptions: [] as string[] };
   const finish = (outcome: Outcome, rest: Partial<Assessment> = {}): Assessment => ({
     outcome,
     needsReview: flags.some((f) => f.severity === 'review'),
@@ -193,6 +217,9 @@ export function assess(email: IncomingEmail, extraction: Extraction, options: As
   ] as const) {
     const flag = match ? airportFlag(side, match) : null;
     if (flag) flags.push(flag);
+    if (match?.ok && match.method === 'assumed') {
+      base.assumptions.push(airportAssumption(side, match.airport, match.alternatives));
+    }
   }
   if (origin && destination && origin.iata === destination.iata) {
     flags.push({
@@ -222,6 +249,7 @@ export function assess(email: IncomingEmail, extraction: Extraction, options: As
       severity: 'info',
       message: 'Cargo type not stated: quoted as general cargo, the reply asks to confirm',
     });
+    base.assumptions.push('Quoted as general cargo; please let us know if the shipment is dangerous or perishable.');
   }
 
   // 6. AI confidence, only for fields the AI actually filled in.

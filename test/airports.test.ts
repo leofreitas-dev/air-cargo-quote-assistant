@@ -35,10 +35,20 @@ describe('resolveAirport', () => {
     expect(code('Campinas')).toBe('VCP/city');
   });
 
-  it('does not guess when a city has several airports', () => {
+  it('assumes the main cargo airport for Sao Paulo and names the alternative', () => {
     const m = resolveAirport('Sao Paulo');
-    expect(m.ok).toBe(false);
-    expect(!m.ok && m.reason === 'ambiguous' && m.candidates.map((a) => a.iata)).toEqual(['GRU', 'CGH']);
+    expect(m.ok && m.airport.iata).toBe('GRU');
+    expect(m.ok && m.method === 'assumed' && m.alternatives.map((a) => a.iata)).toEqual(['VCP']);
+    expect(code('São Paulo')).toBe('GRU/assumed');
+  });
+
+  it('asks between the cargo airports of New York (JFK or EWR, not LGA)', () => {
+    const m = resolveAirport('New York');
+    expect(!m.ok && m.reason === 'ambiguous' && m.candidates.map((a) => a.iata)).toEqual(['JFK', 'EWR']);
+    expect(code('LaGuardia')).toBe('LGA/name'); // still known when named explicitly
+  });
+
+  it('does not guess when another city has several airports', () => {
     expect(code('London')).toBe('ambiguous');
   });
 

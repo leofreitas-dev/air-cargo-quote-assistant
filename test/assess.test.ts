@@ -74,6 +74,27 @@ describe('assess', () => {
     expect(a.needsReview).toBe(false);
   });
 
+  it('assumes GRU for "Sao Paulo", tells the approver and writes the assumption for the reply', () => {
+    const a = assess(email, extraction({ origin: 'Sao Paulo' }));
+    expect(a.outcome).toBe('quote');
+    expect(a.origin?.iata).toBe('GRU');
+    expect(a.needsReview).toBe(false);
+    expect(a.flags).toEqual([
+      {
+        code: 'airport_assumed',
+        severity: 'info',
+        message:
+          'Origin "Sao Paulo" assumed to be GRU, the main cargo airport; could also be VCP (Viracopos International Airport). The reply states this assumption',
+      },
+    ]);
+    expect(a.assumptions).toEqual(['Quoted ex GRU; if the cargo ships from Viracopos (VCP), let us know.']);
+  });
+
+  it('words the assumption for a destination too', () => {
+    const a = assess(email, extraction({ origin: 'MIA', destination: 'Sao Paulo' }));
+    expect(a.assumptions).toEqual(['Quoted to GRU; if the cargo goes to Viracopos (VCP), let us know.']);
+  });
+
   it('flags an invalid airport code and asks', () => {
     const a = assess(email, extraction({ destination: 'XYZ' }));
     expect(a.outcome).toBe('ask_for_info');
@@ -83,7 +104,9 @@ describe('assess', () => {
   it('asks which airport when a city has several', () => {
     const a = assess(email, extraction({ destination: 'New York' }));
     expect(a.outcome).toBe('ask_for_info');
-    expect(a.flags.find((f) => f.code === 'ambiguous_airport')?.message).toMatch(/JFK.*LGA/);
+    expect(a.flags.find((f) => f.code === 'ambiguous_airport')?.message).toBe(
+      'Destination "New York" could be more than one airport: JFK (New York John F. Kennedy International Airport), EWR (Newark Liberty International Airport)',
+    );
   });
 
   it('flags origin equal to destination', () => {
@@ -118,6 +141,9 @@ describe('assess', () => {
     expect(a.outcome).toBe('quote');
     expect(a.needsReview).toBe(false);
     expect(codes(a)).toEqual(['cargo_type_assumed']);
+    expect(a.assumptions).toEqual([
+      'Quoted as general cargo; please let us know if the shipment is dangerous or perishable.',
+    ]);
   });
 
   it('sends low-confidence fields to review and lists them', () => {

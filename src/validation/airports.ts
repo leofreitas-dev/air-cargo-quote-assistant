@@ -1,6 +1,8 @@
 // Turns whatever the email says ("GRU", "Sao Paulo Guarulhos", "Miami") into a
-// known airport, or says clearly why it could not. It never guesses: a city
-// with several airports (New York, London) is reported as ambiguous.
+// known airport, or says clearly why it could not. It never guesses silently:
+// a city with several cargo airports (New York: JFK or EWR) is reported as
+// ambiguous, and a city with one main cargo airport (Sao Paulo: GRU) is
+// "assumed", so the reply can state the assumption.
 
 import rawAirports from '../../data/airports.json' with { type: 'json' };
 
@@ -12,14 +14,29 @@ export interface Airport {
   aliases: string[];
 }
 
-export type MatchMethod = 'code' | 'name' | 'city';
+/** How a bare city name is read for cargo (data/airports.json, cargoCities). */
+export interface CargoCity {
+  city: string;
+  airports: string[];
+  /** Other airports the cargo might really use, mentioned in the reply. */
+  alternatives: string[];
+}
+
+export type MatchMethod = 'code' | 'name' | 'city' | 'assumed';
 
 export type AirportMatch =
-  | { ok: true; airport: Airport; method: MatchMethod; input: string }
+  | { ok: true; airport: Airport; method: Exclude<MatchMethod, 'assumed'>; input: string }
+  | { ok: true; airport: Airport; method: 'assumed'; input: string; alternatives: Airport[] }
   | { ok: false; reason: 'unknown'; input: string }
   | { ok: false; reason: 'ambiguous'; input: string; candidates: Airport[] };
 
 const AIRPORTS: Airport[] = rawAirports.airports;
+const CARGO_CITIES: CargoCity[] = rawAirports.cargoCities.cities;
+
+/** "Viracopos International Airport" -> "Viracopos"; "Rio de Janeiro/Galeao ..." -> "Galeao". */
+export function shortName(airport: Airport): string {
+  return airport.name.replace(/ (International )?Airport$/, '').split('/').pop()!;
+}
 
 /** Words that do not help identify an airport. */
 const NOISE = new Set(['airport', 'international', 'intl', 'int', 'apt', 'aeroporto', 'aeropuerto', 'the', 'of']);
@@ -42,7 +59,11 @@ export function findAirportByCode(code: string): Airport | undefined {
   return AIRPORTS.find((a) => a.iata === upper);
 }
 
-export function resolveAirport(input: string, airports: Airport[] = AIRPORTS): AirportMatch {
+export function resolveAirport(
+  input: string,
+  airports: Airport[] = AIRPORTS,
+  cargoCities: CargoCity[] = CARGO_CITIES,
+): AirportMatch {
   const text = input.trim();
   const norm = normalizeName(text);
   if (!norm) return { ok: false, reason: 'unknown', input };
@@ -64,7 +85,19 @@ export function resolveAirport(input: string, airports: Airport[] = AIRPORTS): A
   );
   if (byName.length === 1) return { ok: true, airport: byName[0]!, method: 'name', input };
 
-  // 4. The city: fine when the city has one airport, ambiguous otherwise.
+  // 4. A city with a known cargo setup: one airport is assumed, several are ambiguous.
+  const byCode = (codes: string[]) =>
+    codes.map((c) => airports.find((a) => a.iata === c)).filter((a): a is Airport => a !== undefined);
+  const cargoCity = cargoCities.find((c) => normalizeName(c.city) === norm);
+  if (cargoCity) {
+    const main = byCode(cargoCity.airports);
+    if (main.length === 1) {
+      return { ok: true, airport: main[0]!, method: 'assumed', input, alternatives: byCode(cargoCity.alternatives) };
+    }
+    if (main.length > 1) return { ok: false, reason: 'ambiguous', input, candidates: main };
+  }
+
+  // 5. Any other city: fine when the city has one airport, ambiguous otherwise.
   const byCity = airports.filter((a) => normalizeName(a.city) === norm);
   if (byCity.length === 1) return { ok: true, airport: byCity[0]!, method: 'city', input };
   if (byCity.length > 1) return { ok: false, reason: 'ambiguous', input, candidates: byCity };
