@@ -31,6 +31,7 @@ th { font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(-
 tr.row:hover { background:#f0f4fa; }
 td a { color:var(--accent); font-weight:600; text-decoration:none; }
 pre { white-space:pre-wrap; font:13px/1.45 ui-monospace, "Cascadia Mono", Menlo, monospace; margin:0; }
+.nowrap { white-space:nowrap; }
 .badge { display:inline-block; font-size:12px; font-weight:600; padding:1px 8px; border-radius:10px; background:var(--info-bg); white-space:nowrap; }
 .badge.review { background:var(--review-bg); color:var(--review); }
 .badge.urgent { background:var(--review); color:#fff; }
@@ -87,9 +88,9 @@ function queueTable(rows: StoredRequest[], empty: string): Html {
   if (rows.length === 0) return html`<p class="muted">${empty}</p>`;
   return html`<table><thead><tr><th>Request</th><th>Received</th><th>From</th><th>Subject</th><th>Outcome</th><th>Total</th><th></th></tr></thead><tbody>
 ${rows.map(
-  (r) => html`<tr class="row"><td><a href="/requests/${r.id}">${r.id}</a></td><td>${when(r.email.receivedAt)}</td><td>${r.email.from}</td>
+  (r) => html`<tr class="row"><td class="nowrap"><a href="/requests/${r.id}">${r.id}</a></td><td class="nowrap">${when(r.email.receivedAt)}</td><td>${r.email.from}</td>
 <td>${r.email.subject}</td><td>${outcomeLabel(r)}</td>
-<td>${r.assessment?.quote ? `USD ${money(r.assessment.quote.totalCents)}` : ''}</td><td>${markers(r)} ${r.status === 'pending' ? '' : statusBadge(r)}</td></tr>`,
+<td class="nowrap">${r.assessment?.quote ? `USD ${money(r.assessment.quote.totalCents)}` : ''}</td><td>${markers(r)} ${r.status === 'pending' ? '' : statusBadge(r)}</td></tr>`,
 )}</tbody></table>`;
 }
 
