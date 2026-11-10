@@ -98,7 +98,8 @@ describe('API for n8n', () => {
     expect(res.status).toBe(201);
     const data = await res.json();
     expect(data).toMatchObject({ created: true, status: 'error', url: `/requests/${data.id}` });
-    expect(data.error).toMatch(/Demo mode has no recorded AI answer/);
+    expect(data.errorReason).toMatch(/Demo mode has no recorded AI answer/);
+    expect(data).not.toHaveProperty('error'); // n8n would retry a filled "error" field
   });
 
   it('is safe to call twice with the same email (n8n retries)', async () => {

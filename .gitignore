@@ -7,3 +7,4 @@ data/demo/recorded-live/
 data/app*.db*
 outbox/
 server.pid
+.n8n/

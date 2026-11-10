@@ -7,6 +7,7 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
 import { z } from 'zod';
 import { ActionError, type QuoteService } from '../app/service.ts';
 import type { IncomingEmail } from '../domain/email.ts';
+import type { StoredRequest } from '../store/db.ts';
 import { computeMetrics } from '../app/metrics.ts';
 import { dashboardPage } from './dashboard.ts';
 import { notFoundPage, pastePage, queuePage, requestPage, type PageContext } from './views.ts';
@@ -67,8 +68,23 @@ function sameOrigin(req: IncomingMessage): boolean {
   }
 }
 
-function toApiResult(r: { id: string; status: string; outcome: string | null; needsReview: boolean; error: string | null }, created: boolean) {
-  return { id: r.id, created, status: r.status, outcome: r.outcome, needsReview: r.needsReview, error: r.error, url: `/requests/${r.id}` };
+function toApiResult(r: StoredRequest, created: boolean) {
+  const reasons = r.assessment?.flags.filter((f) => f.severity === 'review').map((f) => f.message) ?? [];
+  return {
+    id: r.id,
+    created,
+    status: r.status,
+    outcome: r.outcome,
+    needsReview: r.needsReview,
+    priority: r.priority,
+    reviewReasons: reasons,
+    subject: r.email.subject,
+    from: r.email.from,
+    // Not called "error": n8n treats any output with a filled "error" field as a
+    // failed call and retries it.
+    errorReason: r.error,
+    url: `/requests/${r.id}`,
+  };
 }
 
 export function createAppServer({ service, mode, resetDemo }: ServerOptions): Server {

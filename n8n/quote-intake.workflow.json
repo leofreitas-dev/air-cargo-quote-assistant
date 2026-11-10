@@ -1,0 +1,341 @@
+{
+  "name": "Air Cargo Quote - Email intake",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Air Cargo Quote: email intake\nn8n only **orchestrates** here: it receives the email and hands it to the quote engine (`npm start`, port 3000).\nThe engine reads the email with AI, validates, prices **by code** and drafts the reply. **A person approves every reply** in the engine's approval page. Nothing is sent from here.\n\nTo test without a mailbox: activate the workflow and POST an email to `/webhook/quote-email` (see `n8n/README.md`).",
+        "height": 220,
+        "width": 620,
+        "color": 4
+      },
+      "id": "d756376f-aedd-59ef-99d5-1cccd210fb4a",
+      "name": "About this workflow",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Real mailbox\nAdd your IMAP credential to this node and enable it. Emails are marked as read after they are handed over.",
+        "height": 160,
+        "width": 260,
+        "color": 7
+      },
+      "id": "1275c768-f47a-5337-9b1d-ba6b3dca2c10",
+      "name": "Note: IMAP",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Optional: Slack\nAdd a Slack credential and enable this node to get a message when a request is urgent, needs review, or the engine is down.",
+        "height": 160,
+        "width": 280,
+        "color": 7
+      },
+      "id": "a12c9b74-6af0-5052-87eb-b09a7f187264",
+      "name": "Note: Slack",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "format": "resolved",
+        "options": {}
+      },
+      "id": "43be628f-25dd-5398-b4e0-16fe09812812",
+      "name": "New quote email (IMAP)",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        120
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "quote-email",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "bfe23945-fb04-5729-aa00-75ab6732e2dd",
+      "name": "Test email (webhook)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        320
+      ],
+      "webhookId": "3f5d2a64-1c1e-4a55-9a0e-6b1f0e7c2a10"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Turns an incoming email (IMAP trigger or test webhook) into the format\n// the quote engine expects: { messageId, from, subject, receivedAt, body }.\n// No business logic here: reading, pricing and review rules live in the engine.\nconst out = [];\nfor (const item of $input.all()) {\n  const j = item.json;\n  // Test webhook: the email is in the request body. IMAP: it is the item itself.\n  const src = j.body && typeof j.body === 'object' ? j.body : j;\n\n  const f = src.from;\n  const from = typeof f === 'string' ? f : (f?.value?.[0]?.address ?? f?.text ?? '');\n  const html = src.html ?? src.textHtml ?? '';\n  const text = src.text ?? src.textPlain ?? (typeof src.body === 'string' ? src.body : '') ?? '';\n  const body = String(text || html.replace(/<[^>]+>/g, ' ')).trim();\n\n  const parsed = new Date(src.receivedAt ?? src.date ?? Date.now());\n  const receivedAt = isNaN(parsed.getTime()) ? new Date().toISOString() : parsed.toISOString();\n  const subject = String(src.subject ?? '');\n\n  // The Message-ID makes the engine call safe to repeat (no duplicate request,\n  // no second AI charge). If an email has none, use a stable stand-in.\n  const messageId = src.messageId ?? src.metadata?.['message-id'] ?? `<${from}|${receivedAt}|${subject}>`;\n\n  out.push({ json: { messageId, from, subject, receivedAt, body } });\n}\nreturn out;"
+      },
+      "id": "78553876-7ece-510d-a794-59c25ed86477",
+      "name": "Normalize email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3000/api/requests",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "6f3573b1-d8f8-5561-9e75-4b436f7bc2ab",
+      "name": "Send to quote engine",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        220
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a1b2c3d4-0000-4000-8000-000000000001",
+              "leftValue": "={{ $json.created && ($json.status === 'error' || $json.needsReview || $json.priority === 'urgent') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "33913f7e-e1ee-5638-a013-f13763525f8d",
+      "name": "Needs attention now?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        780,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1b2c3d4-0000-4000-8000-000000000002",
+              "name": "text",
+              "value": "={{ ($json.priority === 'urgent' ? 'URGENT: ' : '') + 'Quote request ' + $json.id + ' from ' + $json.from + ' (' + $json.subject + ')' + ($json.status === 'error' ? ' is in the ERROR QUEUE: ' + $json.errorReason : ($json.needsReview ? ' needs review: ' + $json.reviewReasons.join('; ') : ' is waiting for approval.')) + ' Open http://127.0.0.1:3000' + $json.url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "def269cd-a76d-57e4-a4d8-0251b2108352",
+      "name": "Write alert",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        40
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "89779dcd-9fe1-5047-892a-46c9c51d1503",
+      "name": "Waiting for approval",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1b2c3d4-0000-4000-8000-000000000003",
+              "name": "text",
+              "value": "={{ 'Quote engine did not answer for email ' + $json.messageId + ' (' + $json.subject + '): ' + ($json.error?.message ?? 'unknown error') + '. Re-run this execution in n8n once the engine is back; it is safe to repeat.' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "ec9b56ef-d865-559c-863d-aaaf4b90be11",
+      "name": "Engine did not answer",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        780,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "#cargo-quotes",
+          "mode": "name"
+        },
+        "text": "={{ $json.text }}",
+        "otherOptions": {}
+      },
+      "id": "9a606b0a-6793-5a5c-b0fb-1ad806667350",
+      "name": "Notify Slack (optional)",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1340,
+        140
+      ],
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "New quote email (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Normalize email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test email (webhook)": {
+      "main": [
+        [
+          {
+            "node": "Normalize email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize email": {
+      "main": [
+        [
+          {
+            "node": "Send to quote engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to quote engine": {
+      "main": [
+        [
+          {
+            "node": "Needs attention now?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Engine did not answer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs attention now?": {
+      "main": [
+        [
+          {
+            "node": "Write alert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Waiting for approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write alert": {
+      "main": [
+        [
+          {
+            "node": "Notify Slack (optional)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Engine did not answer": {
+      "main": [
+        [
+          {
+            "node": "Notify Slack (optional)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all"
+  },
+  "pinData": {},
+  "active": false,
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": [],
+  "id": "AirCargoQuoteIntake1"
+}
