@@ -10,6 +10,7 @@ Requires Node 24 or later.
 
 ```
 npm install
+npm start                                        # approval tool at http://127.0.0.1:3000 (demo mode)
 npm run demo                                     # the 10 demo emails, end to end, no API key needed
 npm run demo -- --drafts                         # plus the full reply draft for each email
 npm run demo -- --live                           # same, with the real AI (needs ANTHROPIC_API_KEY in .env)

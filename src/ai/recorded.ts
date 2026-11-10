@@ -43,7 +43,9 @@ export class RecordedCaller<Input> implements ModelCaller<Input> {
   async attempt(input: Input, attemptNumber: number): Promise<RawAttempt> {
     const file = this.fileFor(input);
     const recording = file ? readRecording(file) : null;
-    if (!recording) throw new Error(`No recording${file ? ` at ${file}` : ''}`);
+    if (!recording) {
+      throw new Error('Demo mode has no recorded AI answer for this email; start with --live to use the real AI');
+    }
     // Past the last recorded attempt, repeat the last one.
     const a = recording.attempts[Math.min(attemptNumber, recording.attempts.length) - 1]!;
     return {

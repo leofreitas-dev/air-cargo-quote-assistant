@@ -8,7 +8,8 @@
     "price": "node src/cli/price.ts",
     "airport": "node src/cli/airport.ts",
     "demo": "node src/cli/demo.ts",
-    "record": "node src/cli/record.ts"
+    "record": "node src/cli/record.ts",
+    "start": "node src/cli/start.ts"
   },
   "license": "MIT",
   "type": "module",
