@@ -54,6 +54,8 @@ export interface Assessment {
   missingFields: RequiredField[];
   /** Customer-facing sentences the reply must include, e.g. "Quoted ex GRU; ...". */
   assumptions: string[];
+  /** What the reply must ask the customer, e.g. "the total gross weight (kg or lb)". */
+  questions: string[];
   origin: Airport | null;
   destination: Airport | null;
   /** Ready to price: totals, airports resolved. Null when something is missing. */
@@ -71,6 +73,14 @@ export interface AssessOptions {
 }
 
 export const MIN_CONFIDENCE = 0.8;
+
+/** How the reply asks for each missing field. */
+const FIELD_QUESTIONS: Record<RequiredField, string> = {
+  origin: 'the origin airport (the 3-letter code helps)',
+  destination: 'the destination airport (the 3-letter code helps)',
+  pieces: 'the number of pieces and the dimensions of each (length x width x height, in cm or inches)',
+  weight: 'the total gross weight (in kg or lb)',
+};
 
 const FIELD_LABELS: Record<RequiredField, string> = {
   origin: 'origin airport',
@@ -95,6 +105,17 @@ export function airportAssumption(side: 'Origin' | 'Destination', airport: Airpo
   return side === 'Origin'
     ? `${quoted}; if the cargo ships from ${alt}, let us know.`
     : `${quoted}; if the cargo goes to ${alt}, let us know.`;
+}
+
+/** The question the reply asks when an airport could not be read. */
+function airportQuestion(side: 'Origin' | 'Destination', match: AirportMatch): string | null {
+  if (match.ok) return null;
+  const which = side.toLowerCase();
+  if (match.reason === 'ambiguous') {
+    const options = match.candidates.map((a) => `${a.iata} (${shortName(a)})`);
+    return `which ${which} airport you mean by "${match.input}": ${options.slice(0, -1).join(', ')} or ${options.at(-1)}`;
+  }
+  return `the ${which} airport: we could not find "${match.input}" (the 3-letter code helps)`;
 }
 
 function airportFlag(side: 'Origin' | 'Destination', match: AirportMatch): Flag | null {
@@ -151,7 +172,14 @@ export function assess(email: IncomingEmail, extraction: Extraction, options: As
     readyDate: x.readyDate,
   });
 
-  const base = { origin, destination, fingerprint: fp, missingFields: [] as RequiredField[], assumptions: [] as string[] };
+  const base = {
+    origin,
+    destination,
+    fingerprint: fp,
+    missingFields: [] as RequiredField[],
+    assumptions: [] as string[],
+    questions: [] as string[],
+  };
   const finish = (outcome: Outcome, rest: Partial<Assessment> = {}): Assessment => ({
     outcome,
     needsReview: flags.some((f) => f.severity === 'review'),
@@ -209,6 +237,7 @@ export function assess(email: IncomingEmail, extraction: Extraction, options: As
     });
   }
   base.missingFields = missing;
+  base.questions.push(...missing.map((f) => FIELD_QUESTIONS[f]));
 
   // 4. Airports.
   for (const [side, match] of [
@@ -217,6 +246,8 @@ export function assess(email: IncomingEmail, extraction: Extraction, options: As
   ] as const) {
     const flag = match ? airportFlag(side, match) : null;
     if (flag) flags.push(flag);
+    const question = match ? airportQuestion(side, match) : null;
+    if (question) base.questions.push(question);
     if (match?.ok && match.method === 'assumed') {
       base.assumptions.push(airportAssumption(side, match.airport, match.alternatives));
     }
@@ -227,6 +258,7 @@ export function assess(email: IncomingEmail, extraction: Extraction, options: As
       severity: 'review',
       message: `Origin and destination are both ${origin.iata}`,
     });
+    base.questions.push(`the origin and destination airports (we read both as ${origin.iata})`);
   }
 
   // 5. Cargo type.

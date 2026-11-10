@@ -1,0 +1,18 @@
+{
+  "note": "Recorded from the live API on 2026-11-10 by npm run record.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 891,
+        "output_tokens": 109
+      },
+      "output": {
+        "greeting": "Hello Jun,",
+        "opening": "Thank you for your enquiry. Please find our quote below. As this shipment contains dangerous goods, it will need dangerous goods documents and airline acceptance before it can move.",
+        "closing": "Please confirm if you would like to proceed with this booking and we will take it from there."
+      }
+    }
+  ]
+}

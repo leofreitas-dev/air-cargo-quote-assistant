@@ -1,0 +1,18 @@
+{
+  "note": "Recorded from the live API on 2026-11-10 by npm run record.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 863,
+        "output_tokens": 98
+      },
+      "output": {
+        "greeting": "Hello Paula,",
+        "opening": "Thank you for your enquiry about shipping your roasted coffee with us. We need a few more details before we can prepare a quote for you.",
+        "closing": "Could you please reply with the remaining details so we can get your quote ready as soon as possible?"
+      }
+    }
+  ]
+}

@@ -1,0 +1,369 @@
+DEMO MODE: AI answers come from data/demo/recorded/extraction and data/demo/recorded/drafts (no API key used)
+
+REQ-001  01-gru-mia-pallets  <ana.ribeiro@andorinha-logistica.test>
+  Subject:   Quote request GRU-MIA, 3 pallets
+  Extracted: GRU -> MIA | 3 x 120x100x110 cm | 420 kg total | general | ready 2026-11-13
+  Outcome:   QUOTE  USD 2,706.00 (chargeable 660 kg)
+  Draft:     quote reply to ana.ribeiro@andorinha-logistica.test (text by AI)
+  AI:        read #1 ok | write #1 ok
+             3,519 in + 730 out tokens | US$ 0.00072 (claude-haiku-5-5)
+
+    | To: ana.ribeiro@andorinha-logistica.test
+    | Subject: RE: Quote request GRU-MIA, 3 pallets
+    | 
+    | Hello Ana,
+    | 
+    | Thank you for your quote request. Please find our quote below.
+    | 
+    | Quote REQ-001
+    | 
+    | Route:              GRU -> MIA, airport to airport
+    | Cargo:              General cargo
+    | Pieces:             3 x 120 x 100 x 110 cm
+    | Actual weight:      420.0 kg
+    | Volumetric weight:  660.0 kg (3,960,000 cm3 / 6000)
+    | Chargeable weight:  660.0 kg
+    | Cargo ready:        2026-11-13
+    | 
+    | Air freight (+500 rate)       660.0 kg x 3.10     USD  2,046.00
+    | Fuel surcharge                660.0 kg x 0.85     USD    561.00
+    | Security surcharge            660.0 kg x 0.15     USD     99.00
+    |                                                   -------------
+    | Total                                             USD  2,706.00
+    | 
+    | Notes:
+    | - Valid until 2026-11-16, subject to space availability at booking. Airport to airport; pickup, customs clearance and delivery are not included.
+    | 
+    | Once you have reviewed it, please let us know if you would like to confirm the booking.
+    | 
+    | Best regards,
+    | Quotes Desk
+    | Cumulus Air Cargo
+    | quotes@cumulus-cargo.test
+
+
+REQ-002  02-inches-mia-gru  <mike.dalton@coralbay-freight.test>
+  Subject:   Rate request MIA > GRU
+  Extracted: Miami (MIA) -> Sao Paulo (GRU) | 2 x 48x40x40 in + 1 x 30x20x20 in | 410 kg total | general | ready 2026-11-11
+  Outcome:   QUOTE  USD 1,832.64 (chargeable 452.5 kg)
+  Draft:     quote reply to mike.dalton@coralbay-freight.test (text by AI)
+  AI:        read #1 ok | write #1 ok
+             3,563 in + 771 out tokens | US$ 0.00074 (claude-haiku-5-5)
+
+    | To: mike.dalton@coralbay-freight.test
+    | Subject: RE: Rate request MIA > GRU
+    | 
+    | Hello Mike,
+    | 
+    | Thank you for your rate request for general cargo. Please find our quote below.
+    | 
+    | Quote REQ-002
+    | 
+    | Route:              MIA -> GRU, airport to airport
+    | Cargo:              General cargo (Auto parts)
+    | Pieces:             2 x 48 x 40 x 40 in (121.92 x 101.6 x 101.6 cm)
+    |                     1 x 30 x 20 x 20 in (76.2 x 50.8 x 50.8 cm)
+    | Actual weight:      410.0 kg
+    | Volumetric weight:  452.3 kg (2,713,698 cm3 / 6000)
+    | Chargeable weight:  452.5 kg
+    | Cargo ready:        2026-11-11
+    | 
+    | Air freight (+300 rate)       452.5 kg x 3.05     USD  1,380.13
+    | Fuel surcharge                452.5 kg x 0.85     USD    384.63
+    | Security surcharge            452.5 kg x 0.15     USD     67.88
+    |                                                   -------------
+    | Total                                             USD  1,832.64
+    | 
+    | Notes:
+    | - Valid until 2026-11-16, subject to space availability at booking. Airport to airport; pickup, customs clearance and delivery are not included.
+    | 
+    | Once you have reviewed it, please let us know if you would like to confirm the booking.
+    | 
+    | Best regards,
+    | Quotes Desk
+    | Cumulus Air Cargo
+    | quotes@cumulus-cargo.test
+
+
+REQ-003  03-pounds-gru-jfk  <logistics@tidewater-imports.test>
+  Subject:   Air quote needed - GRU/JFK
+  Extracted: GRU -> JFK | 4 x 60x40x50 cm | 220 lb total | general | ready 2026-11-16
+  Outcome:   QUOTE  USD 495.00 (chargeable 100 kg)
+  Draft:     quote reply to logistics@tidewater-imports.test (text by AI)
+  AI:        read #1 ok | write #1 ok
+             3,507 in + 291 out tokens | US$ 0.00050 (claude-haiku-5-5)
+
+    | To: logistics@tidewater-imports.test
+    | Subject: RE: Air quote needed - GRU/JFK
+    | 
+    | Hello,
+    | 
+    | Thank you for your request for Tidewater Imports. Please find our quote below.
+    | 
+    | Quote REQ-003
+    | 
+    | Route:              GRU -> JFK, airport to airport
+    | Cargo:              General cargo (4 cartons of textiles)
+    | Pieces:             4 x 60 x 40 x 50 cm
+    | Actual weight:      220 lb (99.8 kg)
+    | Volumetric weight:  80.0 kg (480,000 cm3 / 6000)
+    | Chargeable weight:  100.0 kg
+    | Cargo ready:        2026-11-16
+    | 
+    | Air freight (+100 rate)       100.0 kg x 3.95     USD    395.00
+    | Fuel surcharge                100.0 kg x 0.85     USD     85.00
+    | Security surcharge            100.0 kg x 0.15     USD     15.00
+    |                                                   -------------
+    | Total                                             USD    495.00
+    | 
+    | Notes:
+    | - Valid until 2026-11-16, subject to space availability at booking. Airport to airport; pickup, customs clearance and delivery are not included.
+    | 
+    | Once you have reviewed it, please let us know if you would like to confirm the booking.
+    | 
+    | Best regards,
+    | Quotes Desk
+    | Cumulus Air Cargo
+    | quotes@cumulus-cargo.test
+
+
+REQ-004  04-missing-weight  <paula.mendes@serra-azul-cafe.test>
+  Subject:   Coffee to Lisbon
+  Extracted: GRU -> Lisbon | 2 x 120x80x150 cm | ? kg | general | ready ?
+  Outcome:   ASK FOR INFO  -> NEEDS REVIEW
+             [review] Missing: weight
+             [info]   Destination "Lisbon" read as LIS (Lisbon Humberto Delgado Airport)
+             [review] AI is not sure about: cargoType 70%
+  Draft:     ask for info reply to paula.mendes@serra-azul-cafe.test (text by AI)
+  AI:        read #1 ok | write #1 ok
+             3,514 in + 302 out tokens | US$ 0.00050 (claude-haiku-5-5)
+
+    | To: paula.mendes@serra-azul-cafe.test
+    | Subject: RE: Coffee to Lisbon
+    | 
+    | Hello Paula,
+    | 
+    | Thank you for your enquiry about shipping your roasted coffee with us. We need a few more details before we can prepare a quote for you.
+    | 
+    | Could you please send us:
+    | - the total gross weight (in kg or lb)
+    | 
+    | What we have so far:
+    | - Route: GRU -> LIS
+    | - Pieces: 2 x 120 x 80 x 150 cm
+    | - Cargo: General cargo (roasted coffee)
+    | 
+    | Could you please reply with the remaining details so we can get your quote ready as soon as possible?
+    | 
+    | Best regards,
+    | Quotes Desk
+    | Cumulus Air Cargo
+    | quotes@cumulus-cargo.test
+
+
+REQ-005  05-lithium-batteries  <jun.tanaka@kestrel-electronics.test>
+  Subject:   Quote VCP-MIA, electronics with batteries
+  Extracted: VCP -> MIA | 5 x 50x40x40 cm | 85 kg total | dangerous | ready 2026-11-12
+  Outcome:   QUOTE  USD 420.75 (chargeable 85 kg)  -> NEEDS REVIEW
+             [review] Dangerous goods (handheld scanners with lithium ion batteries packed with equipment (UN3481)): check DG documents and airline acceptance before sending
+  Draft:     quote reply to jun.tanaka@kestrel-electronics.test (text by AI)
+  AI:        read #1 ok | write #1 ok
+             3,572 in + 604 out tokens | US$ 0.00066 (claude-haiku-5-5)
+
+    | To: jun.tanaka@kestrel-electronics.test
+    | Subject: RE: Quote VCP-MIA, electronics with batteries
+    | 
+    | Hello Jun,
+    | 
+    | Thank you for your enquiry. Please find our quote below. As this shipment contains dangerous goods, it will need dangerous goods documents and airline acceptance before it can move.
+    | 
+    | Quote REQ-005
+    | 
+    | Route:              VCP -> MIA, airport to airport
+    | Cargo:              Dangerous goods (handheld scanners with lithium ion batteries packed with equipment (UN3481))
+    | Pieces:             5 x 50 x 40 x 40 cm
+    | Actual weight:      85.0 kg
+    | Volumetric weight:  66.7 kg (400,000 cm3 / 6000)
+    | Chargeable weight:  85.0 kg
+    | Cargo ready:        2026-11-12
+    | 
+    | Air freight (+45 rate)        85.0 kg x 3.95      USD    335.75
+    | Fuel surcharge                85.0 kg x 0.85      USD     72.25
+    | Security surcharge            85.0 kg x 0.15      USD     12.75
+    |                                                   -------------
+    | Total                                             USD    420.75
+    | 
+    | Notes:
+    | - Dangerous goods: subject to a correct Shipper's Declaration for Dangerous Goods and airline acceptance.
+    | - Valid until 2026-11-16, subject to space availability at booking. Airport to airport; pickup, customs clearance and delivery are not included.
+    | 
+    | Please confirm if you would like to proceed with this booking and we will take it from there.
+    | 
+    | Best regards,
+    | Quotes Desk
+    | Cumulus Air Cargo
+    | quotes@cumulus-cargo.test
+
+
+REQ-006  06-airport-full-name  <carlos.nunes@ipe-amarelo-moveis.test>
+  Subject:   Furniture crate to Germany
+  Extracted: Sao Paulo Guarulhos -> Frankfurt | 1 x 200x100x120 cm | 310 kg total | general | ready 2026-11-18
+  Outcome:   QUOTE  USD 2,020.00 (chargeable 400 kg)
+             [info]   Origin "Sao Paulo Guarulhos" read as GRU (Sao Paulo/Guarulhos International Airport)
+             [info]   Destination "Frankfurt" read as FRA (Frankfurt Airport)
+  Draft:     quote reply to carlos.nunes@ipe-amarelo-moveis.test (text by AI)
+  AI:        read #1 ok | write #1 ok
+             3,535 in + 342 out tokens | US$ 0.00052 (claude-haiku-5-5)
+
+    | To: carlos.nunes@ipe-amarelo-moveis.test
+    | Subject: RE: Furniture crate to Germany
+    | 
+    | Hello Carlos,
+    | 
+    | Thank you for your enquiry about shipping your furniture crate to Germany. Please find our quote below.
+    | 
+    | Quote REQ-006
+    | 
+    | Route:              GRU -> FRA, airport to airport
+    | Cargo:              General cargo (1 wooden crate with furniture)
+    | Pieces:             1 x 200 x 100 x 120 cm
+    | Actual weight:      310.0 kg
+    | Volumetric weight:  400.0 kg (2,400,000 cm3 / 6000)
+    | Chargeable weight:  400.0 kg
+    | Cargo ready:        2026-11-18
+    | 
+    | Air freight (+300 rate)       400.0 kg x 4.05     USD  1,620.00
+    | Fuel surcharge                400.0 kg x 0.85     USD    340.00
+    | Security surcharge            400.0 kg x 0.15     USD     60.00
+    |                                                   -------------
+    | Total                                             USD  2,020.00
+    | 
+    | Notes:
+    | - Valid until 2026-11-16, subject to space availability at booking. Airport to airport; pickup, customs clearance and delivery are not included.
+    | - As the cargo is ready after 2026-11-16, we will reconfirm the rate before booking.
+    | 
+    | Once you have reviewed the quote, please let us know if you would like us to proceed with the booking.
+    | 
+    | Best regards,
+    | Quotes Desk
+    | Cumulus Air Cargo
+    | quotes@cumulus-cargo.test
+
+
+REQ-007  07-duplicate-resend  <carlos.nunes@ipe-amarelo-moveis.test>
+  Subject:   RE: Furniture crate to Germany
+  Extracted: GRU -> FRA | 1 x 200x100x120 cm | 310 kg total | general | ready 2026-11-18
+  Outcome:   DUPLICATE  -> NEEDS REVIEW
+             [review] Same shipment already requested by this sender in request REQ-006 (2026-11-09)
+  Draft:     none, a person decides
+  AI:        read #1 ok
+             2,652 in + 228 out tokens | US$ 0.00038 (claude-haiku-5-5)
+
+REQ-008  08-mixed-pieces  <sofia.lindqvist@nordlys-medtech.test>
+  Subject:   Quote GIG to MIA - medical equipment
+  Extracted: GIG -> MIA | 2 x 80x60x50 cm + 1 x 120x80x100 cm + 3 x 150x20x20 cm | 260 kg total | general | ready 2026-11-16
+  Outcome:   QUOTE  USD 1,282.50 (chargeable 270 kg)
+  Draft:     quote reply to sofia.lindqvist@nordlys-medtech.test (text by AI)
+  AI:        read #1 rejected (Answer was cut off (max_tokens)), #2 ok | write #1 ok
+             4,877 in + 1,095 out tokens | US$ 0.00104 (claude-haiku-5-5)
+
+    | To: sofia.lindqvist@nordlys-medtech.test
+    | Subject: RE: Quote GIG to MIA - medical equipment
+    | 
+    | Hello Sofia,
+    | 
+    | Thank you for your enquiry about shipping medical equipment with us. Please find our quote below.
+    | 
+    | Quote REQ-008
+    | 
+    | Route:              GIG -> MIA, airport to airport
+    | Cargo:              General cargo (non-hazardous medical equipment)
+    | Pieces:             2 x 80 x 60 x 50 cm
+    |                     1 x 120 x 80 x 100 cm
+    |                     3 x 150 x 20 x 20 cm
+    | Actual weight:      260.0 kg
+    | Volumetric weight:  270.0 kg (1,620,000 cm3 / 6000)
+    | Chargeable weight:  270.0 kg
+    | Cargo ready:        2026-11-16
+    | 
+    | Air freight (+100 rate)       270.0 kg x 3.75     USD  1,012.50
+    | Fuel surcharge                270.0 kg x 0.85     USD    229.50
+    | Security surcharge            270.0 kg x 0.15     USD     40.50
+    |                                                   -------------
+    | Total                                             USD  1,282.50
+    | 
+    | Notes:
+    | - Valid until 2026-11-17, subject to space availability at booking. Airport to airport; pickup, customs clearance and delivery are not included.
+    | 
+    | Once you have reviewed the quote, please let us know if you would like to confirm the booking.
+    | 
+    | Best regards,
+    | Quotes Desk
+    | Cumulus Air Cargo
+    | quotes@cumulus-cargo.test
+
+
+REQ-009  09-urgent-aog  <ops@quickwing-forwarding.test>
+  Subject:   URGENT - AOG part Miami to Sao Paulo
+  Extracted: Miami -> Sao Paulo | 1 x 100x50x40 cm | 48 kg total | type? | ready 2026-11-10
+  Outcome:   QUOTE  USD 230.40 (chargeable 48 kg)  [URGENT]
+             [info]   Customer marked this as urgent
+             [info]   Origin "Miami" read as MIA (Miami International Airport)
+             [info]   Destination "Sao Paulo" assumed to be GRU, the main cargo airport; could also be VCP (Viracopos International Airport). The reply states this assumption
+             [info]   Cargo type not stated: quoted as general cargo, the reply asks to confirm
+  Draft:     quote reply to ops@quickwing-forwarding.test (text by AI)
+  AI:        read #1 ok | write #1 ok
+             3,507 in + 316 out tokens | US$ 0.00051 (claude-haiku-5-5)
+
+    | To: ops@quickwing-forwarding.test
+    | Subject: RE: URGENT - AOG part Miami to Sao Paulo
+    | 
+    | Hello QuickWing Ops,
+    | 
+    | Thank you for your request. Since this is urgent, we are treating it as a priority, and please find our quote below.
+    | 
+    | Quote REQ-009
+    | 
+    | Route:              MIA -> GRU, airport to airport
+    | Cargo:              General cargo (assumed) (AOG part)
+    | Pieces:             1 x 100 x 50 x 40 cm
+    | Actual weight:      48.0 kg
+    | Volumetric weight:  33.3 kg (200,000 cm3 / 6000)
+    | Chargeable weight:  48.0 kg
+    | Cargo ready:        2026-11-10
+    | 
+    | Air freight (+45 rate)        48.0 kg x 3.80      USD    182.40
+    | Fuel surcharge                48.0 kg x 0.85      USD     40.80
+    | Security surcharge            48.0 kg x 0.15      USD      7.20
+    |                                                   -------------
+    | Total                                             USD    230.40
+    | 
+    | Notes:
+    | - Quoted to GRU; if the cargo goes to Viracopos (VCP), let us know.
+    | - Quoted as general cargo; please let us know if the shipment is dangerous or perishable.
+    | - Valid until 2026-11-17, subject to space availability at booking. Airport to airport; pickup, customs clearance and delivery are not included.
+    | 
+    | Please reply to confirm if you would like us to proceed with the booking.
+    | 
+    | Best regards,
+    | Quotes Desk
+    | Cumulus Air Cargo
+    | quotes@cumulus-cargo.test
+
+
+REQ-010  10-not-a-quote  <billing@andorinha-logistica.test>
+  Subject:   Payment confirmation INV-2026-1187
+  Outcome:   NOT A QUOTE  -> NEEDS REVIEW
+             [review] This email does not look like a quote request
+  Draft:     none, a person decides
+  AI:        read #1 ok
+             2,623 in + 146 out tokens | US$ 0.00034 (claude-haiku-5-5)
+
+SUMMARY
+  Emails:        10
+  Outcomes:      quote 7, ask for info 1, duplicate 1, not a quote 1
+  Drafts:        8 written (0 from the template), all waiting for approval
+  Needs review:  4
+  AI retries:    1 request(s) needed more than one attempt
+  AI usage:      34,869 input + 4,825 output tokens (reading + writing)
+  AI cost:       US$ 0.00590 total, US$ 0.00059 per email, about US$ 0.59 per 1,000 emails

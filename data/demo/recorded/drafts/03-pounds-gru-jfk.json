@@ -1,0 +1,18 @@
+{
+  "note": "Recorded from the live API on 2026-11-10 by npm run record.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 860,
+        "output_tokens": 77
+      },
+      "output": {
+        "greeting": "Hello,",
+        "opening": "Thank you for your request for Tidewater Imports. Please find our quote below.",
+        "closing": "Once you have reviewed it, please let us know if you would like to confirm the booking."
+      }
+    }
+  ]
+}

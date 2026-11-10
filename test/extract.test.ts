@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import type { IncomingEmail } from '../src/domain/email.ts';
-import { costUsd } from '../src/extraction/cost.ts';
-import { extractWithRetry, parseAttempt, type Extractor, type RawAttempt } from '../src/extraction/extract.ts';
+import type { RawAttempt } from '../src/ai/call.ts';
+import { costUsd } from '../src/ai/cost.ts';
+import { templateText, type DraftWriter } from '../src/drafting/text.ts';
+import { extractWithRetry, parseAttempt, type Extractor } from '../src/extraction/extract.ts';
 import { processEmail } from '../src/pipeline/process.ts';
 
 const email: IncomingEmail = {
@@ -33,8 +35,8 @@ const answer = (output: string, stopReason = 'end_turn'): RawAttempt => ({
   usage: { inputTokens: 1000, outputTokens: 200 },
 });
 
-/** An extractor that plays a fixed script: an answer, or an Error to throw. */
-function scripted(...steps: (RawAttempt | Error)[]): Extractor & { calls: number } {
+/** A caller that plays a fixed script: an answer, or an Error to throw. */
+function scripted(...steps: (RawAttempt | Error)[]): Extractor & DraftWriter & { calls: number } {
   return {
     mode: 'demo',
     calls: 0,
@@ -78,7 +80,7 @@ describe('parseAttempt', () => {
 describe('extractWithRetry', () => {
   it('succeeds on the first attempt and records tokens and cost', async () => {
     const r = await extractWithRetry(scripted(answer(validOutput)), email);
-    expect(r.ok).toBe(true);
+    expect(r.ok && r.value.origin).toBe('GRU');
     expect(r.ai).toMatchObject({ model: 'claude-haiku-5-5', inputTokens: 1000, outputTokens: 200 });
     expect(r.ai.costUsd).toBeCloseTo(0.0002, 10);
   });
@@ -112,15 +114,17 @@ describe('extractWithRetry', () => {
 
 describe('processEmail', () => {
   it('sends an email the AI cannot read to the error queue (brief: AI failure path)', async () => {
-    const r = await processEmail('REQ-099', email, scripted(new Error('API unavailable')));
+    const r = await processEmail('REQ-099', email, { extractor: scripted(new Error('API unavailable')), writer: scripted(new Error('unused')) });
     expect(r.status).toBe('error');
     expect(r.assessment).toBeNull();
     expect(r.error).toBe('Extraction failed after 3 attempts. Last error: AI call failed: API unavailable');
   });
 
   it('assesses an email the AI read correctly', async () => {
-    const r = await processEmail('REQ-001', email, scripted(answer(validOutput)));
+    const text = JSON.stringify(templateText({ messageId: '', kind: 'quote', subject: '', senderName: null, senderCompany: null, route: '', cargo: '', urgent: false, dangerousGoods: false, perishable: false, questionCount: 0 }));
+    const r = await processEmail('REQ-001', email, { extractor: scripted(answer(validOutput)), writer: scripted(answer(text)) });
     expect(r.status).toBe('assessed');
     expect(r.assessment?.quote?.totalCents).toBe(270_600);
+    expect(r.draft?.textSource).toBe('ai');
   });
 });

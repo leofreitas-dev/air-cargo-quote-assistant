@@ -1,0 +1,18 @@
+{
+  "note": "Recorded from the live API on 2026-11-10 by npm run record.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 874,
+        "output_tokens": 88
+      },
+      "output": {
+        "greeting": "Hello QuickWing Ops,",
+        "opening": "Thank you for your request. Since this is urgent, we are treating it as a priority, and please find our quote below.",
+        "closing": "Please reply to confirm if you would like us to proceed with the booking."
+      }
+    }
+  ]
+}

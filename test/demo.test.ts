@@ -3,17 +3,13 @@
 
 import { describe, expect, it } from 'vitest';
 import { loadInbox } from '../src/domain/load-emails.ts';
-import { DemoExtractor } from '../src/extraction/demo-extractor.ts';
-import { processInbox } from '../src/pipeline/process.ts';
+import { demoCallers } from '../src/cli/callers.ts';
+import { processInbox, requestAiTotals } from '../src/pipeline/process.ts';
 
 const inbox = loadInbox('data/demo/emails');
-const extractor = DemoExtractor.fromFolders(
-  new Map(inbox.map((e) => [e.email.messageId, e.name])),
-  'data/demo/recorded',
-);
 const results = await processInbox(
   inbox.map((e) => e.email),
-  extractor,
+  demoCallers(inbox),
 );
 const byName = new Map(inbox.map((e, i) => [e.name, results[i]!]));
 const get = (name: string) => {
@@ -68,11 +64,40 @@ describe('demo inbox', () => {
     expect(get('08-mixed-pieces').ai.attempts.map((a) => a.ok)).toEqual([false, true]);
   });
 
-  it('records tokens and cost for every email', () => {
+  it('records tokens and cost for every email, reading and writing', () => {
     for (const r of results) {
       expect(r.ai.model).toBe('claude-haiku-5-5');
       expect(r.ai.inputTokens).toBeGreaterThan(0);
-      expect(r.ai.costUsd).toBeGreaterThan(0);
+      const t = requestAiTotals(r);
+      expect(t.costUsd).toBeGreaterThan(r.draft ? r.ai.costUsd : 0);
     }
+  });
+
+  it('writes a draft for every email that gets a reply, with AI text from the recordings', () => {
+    const drafted = results.filter((r) => r.draft).map((r) => inbox[results.indexOf(r)]!.name);
+    expect(drafted).not.toContain('07-duplicate-resend');
+    expect(drafted).not.toContain('10-not-a-quote');
+    expect(drafted).toHaveLength(8);
+    for (const r of results) {
+      if (!r.draft) continue;
+      expect(r.draft.textSource).toBe('ai');
+      expect(r.draft.warnings).toEqual([]);
+      expect(r.draft.to).toBe(r.email.from);
+    }
+  });
+
+  it('puts the exact code-computed total in every quote draft', () => {
+    for (const r of results) {
+      const q = r.assessment?.quote;
+      if (!q || !r.draft) continue;
+      const total = (q.totalCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+      expect(r.draft.body).toMatch(new RegExp(`Total\\s+USD\\s+${total.replace('.', '\\.')}`));
+    }
+  });
+
+  it('asks for the missing weight and states assumptions in the reply', () => {
+    expect(get('04-missing-weight').draft?.body).toContain('- the total gross weight (in kg or lb)');
+    expect(get('09-urgent-aog').draft?.body).toContain('- Quoted to GRU; if the cargo goes to Viracopos (VCP), let us know.');
+    expect(get('05-lithium-batteries').draft?.body).toContain("Shipper's Declaration for Dangerous Goods");
   });
 });

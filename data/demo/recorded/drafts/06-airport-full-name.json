@@ -1,0 +1,18 @@
+{
+  "note": "Recorded from the live API on 2026-11-10 by npm run record.",
+  "model": "claude-haiku-5-5",
+  "attempts": [
+    {
+      "stopReason": "end_turn",
+      "usage": {
+        "input_tokens": 868,
+        "output_tokens": 93
+      },
+      "output": {
+        "greeting": "Hello Carlos,",
+        "opening": "Thank you for your enquiry about shipping your furniture crate to Germany. Please find our quote below.",
+        "closing": "Once you have reviewed the quote, please let us know if you would like us to proceed with the booking."
+      }
+    }
+  ]
+}

@@ -11,7 +11,8 @@ Requires Node 24 or later.
 ```
 npm install
 npm run demo                                     # the 10 demo emails, end to end, no API key needed
-npm run demo -- --live                           # same, read by the real AI (needs ANTHROPIC_API_KEY in .env)
+npm run demo -- --drafts                         # plus the full reply draft for each email
+npm run demo -- --live                           # same, with the real AI (needs ANTHROPIC_API_KEY in .env)
 npm test                                         # all tests
 npm run price -- GRU MIA 3x120x100x110cm 420kg   # price a shipment, step by step
 npm run airport -- "Sao Paulo Guarulhos" XXX     # how an airport written in an email is read
