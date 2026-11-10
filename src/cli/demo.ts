@@ -1,8 +1,11 @@
-// Runs the 10 demo emails through the pipeline with recorded AI answers.
-// No API key needed. Usage: npm run demo            (summary per email)
-//                           npm run demo -- --details (plus each price breakdown)
+// Runs the 10 demo emails through the pipeline.
+// Usage: npm run demo              recorded AI answers, no API key needed
+//        npm run demo -- --details plus each price breakdown
+//        npm run demo -- --live    real AI answers (needs ANTHROPIC_API_KEY in .env, costs under 1 US cent)
 
 import { DemoExtractor } from '../extraction/demo-extractor.ts';
+import type { Extractor } from '../extraction/extract.ts';
+import { LiveExtractor, loadApiKey } from '../extraction/live-extractor.ts';
 import { loadInbox } from '../domain/load-emails.ts';
 import { processInbox, type ProcessedRequest } from '../pipeline/process.ts';
 import { formatQuote } from '../pricing/format.ts';
@@ -10,6 +13,7 @@ import { formatQuote } from '../pricing/format.ts';
 const EMAILS_DIR = 'data/demo/emails';
 const RECORDED_DIR = 'data/demo/recorded';
 const showDetails = process.argv.includes('--details');
+const liveMode = process.argv.includes('--live');
 
 const money = (cents: number) => (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
 const usd = (n: number, decimals = 5) => `US$ ${n.toFixed(decimals)}`;
@@ -50,13 +54,27 @@ function describe(r: ProcessedRequest): string[] {
 }
 
 const inbox = loadInbox(EMAILS_DIR);
-const extractor = DemoExtractor.fromFolders(new Map(inbox.map((e) => [e.email.messageId, e.name])), RECORDED_DIR);
+let extractor: Extractor;
+if (liveMode) {
+  const apiKey = loadApiKey();
+  if (!apiKey) {
+    console.error('Live mode needs ANTHROPIC_API_KEY in .env (see .env.example). Without it, run: npm run demo');
+    process.exit(1);
+  }
+  extractor = new LiveExtractor({ apiKey });
+} else {
+  extractor = DemoExtractor.fromFolders(new Map(inbox.map((e) => [e.email.messageId, e.name])), RECORDED_DIR);
+}
 const results = await processInbox(
   inbox.map((e) => e.email),
   extractor,
 );
 
-console.log(`DEMO MODE: AI answers come from ${RECORDED_DIR} (no API key used)\n`);
+console.log(
+  liveMode
+    ? 'LIVE MODE: each email is read by the real AI (API key from .env)\n'
+    : `DEMO MODE: AI answers come from ${RECORDED_DIR} (no API key used)\n`,
+);
 for (const [i, r] of results.entries()) {
   console.log(`${r.id}  ${inbox[i]!.name}  <${r.email.from}>`);
   console.log(`  Subject:   ${r.email.subject}`);

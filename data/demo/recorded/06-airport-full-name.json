@@ -1,12 +1,12 @@
 {
-  "note": "Hand-written recording for demo mode (no API key needed). Same shape as a real response: raw model output plus token usage per attempt.",
+  "note": "Recorded from the live API on 2026-11-10 by npm run record.",
   "model": "claude-haiku-5-5",
   "attempts": [
     {
       "stopReason": "end_turn",
       "usage": {
-        "input_tokens": 1236,
-        "output_tokens": 296
+        "input_tokens": 2667,
+        "output_tokens": 249
       },
       "output": {
         "isQuoteRequest": true,
@@ -27,7 +27,7 @@
           "per": "total"
         },
         "cargoType": "general",
-        "cargoDescription": "furniture",
+        "cargoDescription": "1 wooden crate with furniture",
         "readyDate": "2026-11-18",
         "urgent": false,
         "sender": {
@@ -35,12 +35,12 @@
           "company": "Ipe Amarelo Moveis"
         },
         "confidence": {
-          "origin": 0.97,
-          "destination": 0.92,
+          "origin": 0.95,
+          "destination": 0.9,
           "pieces": 0.95,
-          "weight": 0.96,
-          "cargoType": 0.88,
-          "readyDate": 0.7
+          "weight": 0.95,
+          "cargoType": 0.8,
+          "readyDate": 0.9
         }
       }
     }

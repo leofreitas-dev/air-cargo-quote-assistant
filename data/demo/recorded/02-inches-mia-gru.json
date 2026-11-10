@@ -1,12 +1,12 @@
 {
-  "note": "Hand-written recording for demo mode (no API key needed). Same shape as a real response: raw model output plus token usage per attempt.",
+  "note": "Recorded from the live API on 2026-11-10 by npm run record.",
   "model": "claude-haiku-5-5",
   "attempts": [
     {
       "stopReason": "end_turn",
       "usage": {
-        "input_tokens": 1268,
-        "output_tokens": 318
+        "input_tokens": 2700,
+        "output_tokens": 693
       },
       "output": {
         "isQuoteRequest": true,
@@ -34,7 +34,7 @@
           "per": "total"
         },
         "cargoType": "general",
-        "cargoDescription": "auto parts",
+        "cargoDescription": "Auto parts, general cargo",
         "readyDate": "2026-11-11",
         "urgent": false,
         "sender": {
@@ -42,12 +42,12 @@
           "company": "Coral Bay Freight"
         },
         "confidence": {
-          "origin": 0.97,
-          "destination": 0.97,
-          "pieces": 0.95,
-          "weight": 0.96,
-          "cargoType": 0.95,
-          "readyDate": 0.86
+          "origin": 0.95,
+          "destination": 0.95,
+          "pieces": 0.9,
+          "weight": 0.95,
+          "cargoType": 0.9,
+          "readyDate": 0.9
         }
       }
     }

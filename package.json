@@ -7,7 +7,8 @@
     "typecheck": "tsc --noEmit",
     "price": "node src/cli/price.ts",
     "airport": "node src/cli/airport.ts",
-    "demo": "node src/cli/demo.ts"
+    "demo": "node src/cli/demo.ts",
+    "record": "node src/cli/record.ts"
   },
   "license": "MIT",
   "type": "module",
@@ -21,6 +22,7 @@
     "node": ">=24"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.7.0",
     "zod": "^4.6.7"
   }
 }

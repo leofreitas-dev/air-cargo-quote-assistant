@@ -9,12 +9,14 @@ import { z } from 'zod';
 import type { IncomingEmail } from '../domain/email.ts';
 import type { Extractor, RawAttempt } from './extract.ts';
 
-const RecordingSchema = z.object({
+export const RecordingSchema = z.object({
   model: z.string(),
   attempts: z
     .array(
       z.object({
         stopReason: z.string(),
+        /** Written by hand to show a failure path (kept when re-recording). */
+        synthetic: z.boolean().optional(),
         usage: z.object({ input_tokens: z.number().int().min(0), output_tokens: z.number().int().min(0) }),
         /** A JSON answer, stored as an object to keep the file readable... */
         output: z.unknown().optional(),

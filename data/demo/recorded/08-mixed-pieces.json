@@ -1,9 +1,10 @@
 {
-  "note": "Hand-written recording for demo mode (no API key needed). Same shape as a real response: raw model output plus token usage per attempt. The first attempt was cut off (max_tokens), so the pipeline must retry.",
+  "note": "Recorded from the live API on 2026-11-10 by npm run record. Attempts marked synthetic were written by hand to demonstrate the retry path.",
   "model": "claude-haiku-5-5",
   "attempts": [
     {
       "stopReason": "max_tokens",
+      "synthetic": true,
       "usage": {
         "input_tokens": 1289,
         "output_tokens": 160
@@ -13,8 +14,8 @@
     {
       "stopReason": "end_turn",
       "usage": {
-        "input_tokens": 1289,
-        "output_tokens": 412
+        "input_tokens": 2716,
+        "output_tokens": 849
       },
       "output": {
         "isQuoteRequest": true,
@@ -49,7 +50,7 @@
           "per": "total"
         },
         "cargoType": "general",
-        "cargoDescription": "medical equipment, non-hazardous",
+        "cargoDescription": "non-hazardous medical equipment",
         "readyDate": "2026-11-16",
         "urgent": false,
         "sender": {
@@ -57,12 +58,12 @@
           "company": "Nordlys Medtech"
         },
         "confidence": {
-          "origin": 0.97,
-          "destination": 0.97,
+          "origin": 0.95,
+          "destination": 0.95,
           "pieces": 0.9,
-          "weight": 0.96,
-          "cargoType": 0.93,
-          "readyDate": 0.94
+          "weight": 0.95,
+          "cargoType": 0.8,
+          "readyDate": 0.95
         }
       }
     }

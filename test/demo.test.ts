@@ -35,7 +35,7 @@ describe('demo inbox', () => {
     ['03-pounds-gru-jfk', 'quote', false, 49_500],
     ['04-missing-weight', 'ask_for_info', true, null],
     ['05-lithium-batteries', 'quote', true, 42_075],
-    ['06-airport-full-name', 'quote', true, 202_000],
+    ['06-airport-full-name', 'quote', false, 202_000],
     ['07-duplicate-resend', 'duplicate', true, null],
     ['08-mixed-pieces', 'quote', false, 128_250],
     ['09-urgent-aog', 'quote', false, 23_040],
@@ -53,6 +53,9 @@ describe('demo inbox', () => {
     expect(get('04-missing-weight').assessment?.missingFields).toEqual(['weight']);
     expect(flags('05-lithium-batteries')).toContain('dangerous_goods');
     expect(get('06-airport-full-name').assessment?.origin?.iata).toBe('GRU');
+    expect(get('04-missing-weight').assessment?.flags.find((f) => f.code === 'low_confidence')?.message).toBe(
+      'AI is not sure about: cargoType 70%',
+    );
     expect(get('07-duplicate-resend').assessment?.duplicateOf).toBe('REQ-006');
     expect(get('08-mixed-pieces').extraction?.pieces).toHaveLength(3);
     expect(get('09-urgent-aog').assessment?.priority).toBe('urgent');

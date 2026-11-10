@@ -1,12 +1,12 @@
 {
-  "note": "Hand-written recording for demo mode (no API key needed). Same shape as a real response: raw model output plus token usage per attempt.",
+  "note": "Recorded from the live API on 2026-11-10 by npm run record.",
   "model": "claude-haiku-5-5",
   "attempts": [
     {
       "stopReason": "end_turn",
       "usage": {
-        "input_tokens": 1244,
-        "output_tokens": 302
+        "input_tokens": 2651,
+        "output_tokens": 204
       },
       "output": {
         "isQuoteRequest": true,
@@ -31,12 +31,12 @@
           "company": "Serra Azul Cafe"
         },
         "confidence": {
-          "origin": 0.97,
-          "destination": 0.97,
+          "origin": 0.95,
+          "destination": 0.9,
           "pieces": 0.95,
-          "weight": 0.0,
-          "cargoType": 0.82,
-          "readyDate": 0.3
+          "weight": 0,
+          "cargoType": 0.7,
+          "readyDate": 0.2
         }
       }
     }
