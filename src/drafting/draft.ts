@@ -23,6 +23,22 @@ export interface Draft {
   ai: AiUsage | null;
 }
 
+/** Words that mark a team or department rather than a person ("QuickWing Ops", "Billing"). */
+const TEAM_WORDS =
+  /\b(ops|operations?|team|desk|dept|department|logistics|billing|accounts?|support|sales|imports?|exports?|service|admin|bookings?|shipping|warehouse|traffic|procurement|purchasing|freight|forwarding|cargo)\b/i;
+
+/**
+ * The sender's name if it is a person's, otherwise null (the reply then says
+ * just "Hello,"). Checked in code, so it holds even if the AI copies a team name.
+ */
+export function personName(name: string | null, company: string | null): string | null {
+  const n = name?.trim();
+  if (!n || !/\p{L}/u.test(n) || TEAM_WORDS.test(n)) return null;
+  const companyWord = company?.trim().split(/\s+/)[0]?.toLowerCase();
+  if (companyWord && n.toLowerCase().includes(companyWord)) return null;
+  return n;
+}
+
 /** Outcomes that get a reply. Duplicates and non-quote emails wait for a person. */
 export function draftKind(outcome: Assessment['outcome']): DraftKind | null {
   return outcome === 'quote' || outcome === 'ask_for_info' || outcome === 'manual_quote' ? outcome : null;
@@ -33,7 +49,7 @@ export function draftContext(email: IncomingEmail, x: Extraction, a: Assessment,
     messageId: email.messageId,
     kind,
     subject: email.subject,
-    senderName: x.sender.name,
+    senderName: personName(x.sender.name, x.sender.company),
     senderCompany: x.sender.company,
     route: `${a.origin?.iata ?? x.origin ?? '?'} -> ${a.destination?.iata ?? x.destination ?? '?'}`,
     cargo: describeCargo(x),

@@ -55,6 +55,7 @@ describe('demo inbox', () => {
     expect(get('07-duplicate-resend').assessment?.duplicateOf).toBe('REQ-006');
     expect(get('08-mixed-pieces').extraction?.pieces).toHaveLength(3);
     expect(get('09-urgent-aog').assessment?.priority).toBe('urgent');
+    expect(get('09-urgent-aog').draft?.body.startsWith('Hello,\n')).toBe(true);
     expect(get('09-urgent-aog').assessment?.assumptions[0]).toBe(
       'Quoted to GRU; if the cargo goes to Viracopos (VCP), let us know.',
     );

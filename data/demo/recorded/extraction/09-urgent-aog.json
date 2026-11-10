@@ -5,8 +5,8 @@
     {
       "stopReason": "end_turn",
       "usage": {
-        "input_tokens": 2633,
-        "output_tokens": 228
+        "input_tokens": 2682,
+        "output_tokens": 221
       },
       "output": {
         "isQuoteRequest": true,
@@ -31,14 +31,14 @@
         "readyDate": "2026-11-10",
         "urgent": true,
         "sender": {
-          "name": "QuickWing Ops",
+          "name": null,
           "company": "QuickWing Forwarding"
         },
         "confidence": {
           "origin": 0.95,
           "destination": 0.95,
-          "pieces": 0.95,
-          "weight": 0.9,
+          "pieces": 0.9,
+          "weight": 0.85,
           "cargoType": 0,
           "readyDate": 0.9
         }

@@ -5,13 +5,13 @@
     {
       "stopReason": "end_turn",
       "usage": {
-        "input_tokens": 874,
-        "output_tokens": 88
+        "input_tokens": 869,
+        "output_tokens": 94
       },
       "output": {
-        "greeting": "Hello QuickWing Ops,",
-        "opening": "Thank you for your request. Since this is urgent, we are treating it as a priority, and please find our quote below.",
-        "closing": "Please reply to confirm if you would like us to proceed with the booking."
+        "greeting": "Hello,",
+        "opening": "Thank you for your request. Given the urgency of this AOG shipment, we are treating it as a priority. Please find our quote below.",
+        "closing": "Once you have reviewed it, please reply to confirm the booking and we will move forward right away."
       }
     }
   ]

@@ -4,10 +4,11 @@
 //   npm run record -- --write  copies those live reading recordings over the current ones
 //   npm run record -- --drafts writing: records the reply text for every email that gets a
 //                              draft, straight into data/demo/recorded/drafts, and prints the drafts
+//   add --only <name> to any of these to record a single email, e.g. --only 09-urgent-aog
 // Attempts marked "synthetic" in the current recordings (the cut-off answer
 // that demonstrates a retry) are kept in front of the real ones.
 
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { ModelCaller, RawAttempt } from '../ai/call.ts';
 import { loadApiKey } from '../ai/live.ts';
@@ -19,10 +20,17 @@ import { processInbox, type ProcessedRequest } from '../pipeline/process.ts';
 import { demoCallers, namesByMessageId, RECORDED } from './callers.ts';
 
 const LIVE = { extraction: 'data/demo/recorded-live/extraction', drafts: RECORDED.drafts };
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const args = new Set(argv);
+const only = args.has('--only') ? argv[argv.indexOf('--only') + 1] : undefined;
+const selected = (name: string) => !only || name === only;
 const today = new Date().toISOString().slice(0, 10);
 const inbox = loadInbox('data/demo/emails');
 const names = namesByMessageId(inbox);
+if (only && !inbox.some((e) => e.name === only)) {
+  console.error(`No demo email named ${only}`);
+  process.exit(1);
+}
 
 if (args.has('--write')) {
   if (!existsSync(LIVE.extraction)) throw new Error('Nothing to write: run "npm run record" first');
@@ -77,12 +85,19 @@ if (args.has('--drafts')) {
   // Reading comes from the current recordings; only the reply text is live.
   const writer = liveDraftWriter(apiKey);
   const { caller, log } = capturing<DraftContext>(writer, (c) => c.messageId);
-  const callers = { ...demoCallers(inbox), writer: caller };
+  const recorded = demoCallers(inbox);
+  // Selected emails get live text; the others keep their recordings.
+  const mixed: typeof caller = {
+    mode: 'live',
+    attempt: (c, n) => (selected(names.get(c.messageId)!) ? caller.attempt(c, n) : recorded.writer.attempt(c, n)),
+  };
+  const callers = { ...recorded, writer: mixed };
   console.log(`Recording reply text with ${writer.model}...`);
   const results = await processInbox(inbox.map((e) => e.email), callers);
   mkdirSync(LIVE.drafts, { recursive: true });
   for (const r of results) {
     const name = names.get(r.email.messageId)!;
+    if (!selected(name)) continue;
     const raws = log.get(r.email.messageId);
     if (!raws) {
       console.log(`\n== ${name}: no draft (${r.assessment?.outcome ?? r.status})`);
@@ -99,14 +114,14 @@ if (args.has('--drafts')) {
 // Reading: record live answers, then compare with the current recordings.
 const live = liveExtractor(apiKey);
 const { caller, log } = capturing(live, (e) => e.messageId);
+rmSync(LIVE.extraction, { recursive: true, force: true });
 mkdirSync(LIVE.extraction, { recursive: true });
-console.log(`Recording ${inbox.length} emails with ${live.model}...`);
-for (const entry of inbox) {
+cpSync(RECORDED.extraction, LIVE.extraction, { recursive: true }); // unselected emails keep their recordings
+console.log(`Recording ${only ?? `${inbox.length} emails`} with ${live.model}...`);
+for (const entry of inbox.filter((e) => selected(e.name))) {
   const result = await extractWithRetry(caller, entry.email);
   const raws = log.get(entry.email.messageId) ?? [];
   const file = join(LIVE.extraction, `${entry.name}.json`);
-  const current = join(RECORDED.extraction, `${entry.name}.json`);
-  if (existsSync(current)) cpSync(current, file); // so synthetic attempts carry over
   saveRecording(file, live.model, raws);
   const status = result.ok ? 'ok' : `FAILED: ${result.error}`;
   console.log(`  ${entry.name}: ${raws.length} call(s), ${result.ai.inputTokens} in + ${result.ai.outputTokens} out, ${status}`);

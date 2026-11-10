@@ -313,14 +313,14 @@ REQ-009  09-urgent-aog  <ops@quickwing-forwarding.test>
              [info]   Cargo type not stated: quoted as general cargo, the reply asks to confirm
   Draft:     quote reply to ops@quickwing-forwarding.test (text by AI)
   AI:        read #1 ok | write #1 ok
-             3,507 in + 316 out tokens | US$ 0.00051 (claude-haiku-5-5)
+             3,551 in + 315 out tokens | US$ 0.00051 (claude-haiku-5-5)
 
     | To: ops@quickwing-forwarding.test
     | Subject: RE: URGENT - AOG part Miami to Sao Paulo
     | 
-    | Hello QuickWing Ops,
+    | Hello,
     | 
-    | Thank you for your request. Since this is urgent, we are treating it as a priority, and please find our quote below.
+    | Thank you for your request. Given the urgency of this AOG shipment, we are treating it as a priority. Please find our quote below.
     | 
     | Quote REQ-009
     | 
@@ -343,7 +343,7 @@ REQ-009  09-urgent-aog  <ops@quickwing-forwarding.test>
     | - Quoted as general cargo; please let us know if the shipment is dangerous or perishable.
     | - Valid until 2026-11-17, subject to space availability at booking. Airport to airport; pickup, customs clearance and delivery are not included.
     | 
-    | Please reply to confirm if you would like us to proceed with the booking.
+    | Once you have reviewed it, please reply to confirm the booking and we will move forward right away.
     | 
     | Best regards,
     | Quotes Desk
@@ -365,5 +365,5 @@ SUMMARY
   Drafts:        8 written (0 from the template), all waiting for approval
   Needs review:  4
   AI retries:    1 request(s) needed more than one attempt
-  AI usage:      34,869 input + 4,825 output tokens (reading + writing)
+  AI usage:      34,913 input + 4,824 output tokens (reading + writing)
   AI cost:       US$ 0.00590 total, US$ 0.00059 per email, about US$ 0.59 per 1,000 emails

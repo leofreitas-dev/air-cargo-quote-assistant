@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { ModelCaller, RawAttempt } from '../src/ai/call.ts';
 import type { IncomingEmail } from '../src/domain/email.ts';
 import { ExtractionSchema, type Extraction } from '../src/domain/extraction.ts';
-import { buildDraft } from '../src/drafting/draft.ts';
+import { buildDraft, personName } from '../src/drafting/draft.ts';
 import { describeCargo } from '../src/drafting/price-block.ts';
 import { checkDraftText, type DraftContext } from '../src/drafting/text.ts';
 import { assess } from '../src/validation/assess.ts';
@@ -178,5 +178,30 @@ describe('describeCargo', () => {
     expect(describeCargo({ cargoType: 'general', cargoDescription: 'general cargo' })).toBe('General cargo');
     expect(describeCargo({ cargoType: 'general', cargoDescription: 'Auto parts, general cargo' })).toBe('General cargo (Auto parts)');
     expect(describeCargo({ cargoType: null, cargoDescription: 'AOG part' })).toBe('General cargo (assumed) (AOG part)');
+  });
+});
+
+describe('personName', () => {
+  it('keeps a person', () => {
+    expect(personName('Ana Ribeiro', 'Andorinha Logistica')).toBe('Ana Ribeiro');
+    expect(personName('José Álvares', null)).toBe('José Álvares');
+  });
+
+  it('drops teams and departments, so the reply says just "Hello,"', () => {
+    expect(personName('QuickWing Ops', 'QuickWing Forwarding')).toBeNull();
+    expect(personName('Logistics desk', null)).toBeNull();
+    expect(personName('Billing', null)).toBeNull();
+    expect(personName('Tidewater', 'Tidewater Imports')).toBeNull(); // the company name, not a person
+    expect(personName('', null)).toBeNull();
+    expect(personName(null, null)).toBeNull();
+  });
+
+  it('greets a team with "Hello," even if the AI copied the team name', async () => {
+    const { draft, writer: w } = await draftFor(
+      extraction({ sender: { name: 'QuickWing Ops', company: 'QuickWing' } }),
+      writer(new Error('AI down')), // template path: no AI involved
+    );
+    expect(w.seen[0]?.senderName).toBeNull();
+    expect(draft?.body.startsWith('Hello,\n')).toBe(true);
   });
 });
