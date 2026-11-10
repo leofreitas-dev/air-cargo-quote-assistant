@@ -59,7 +59,7 @@ export function layout(title: string, ctx: PageContext, body: Html): string {
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title} · Air Cargo Quote Assistant</title><style>${new Html(STYLE)}</style></head>
 <body>
-<header class="top"><nav><a href="/">Approval queue</a>${ctx.mode === 'live' ? html`<a href="/new">Paste an email</a>` : ''}</nav>
+<header class="top"><nav><a href="/">Approval queue</a><a href="/dashboard">Dashboard</a>${ctx.mode === 'live' ? html`<a href="/new">Paste an email</a>` : ''}</nav>
 <span class="mode">${ctx.mode === 'demo' ? 'DEMO MODE · recorded AI answers' : 'LIVE MODE · real AI'}</span></header>
 <main>
 ${ctx.message ? html`<div class="flash">${ctx.message}</div>` : ''}

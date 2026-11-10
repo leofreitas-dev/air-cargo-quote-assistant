@@ -48,6 +48,15 @@ describe('pages', () => {
     expect(page).toMatch(/Total\s+USD\s+420\.75/);
   });
 
+  it('shows the dashboard and its numbers as JSON', async () => {
+    const page = await (await fetch(base + '/dashboard')).text();
+    expect(page).toContain('Problems by type');
+    expect(page).toContain('Median time to decision');
+    expect(page).toContain('Dangerous goods');
+    const metrics = await (await fetch(base + '/api/metrics')).json();
+    expect(metrics.volume.total).toBeGreaterThanOrEqual(10);
+  });
+
   it('returns 404 for an unknown request', async () => {
     expect((await fetch(base + '/requests/REQ-999')).status).toBe(404);
   });

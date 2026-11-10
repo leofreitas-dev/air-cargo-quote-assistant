@@ -7,6 +7,8 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
 import { z } from 'zod';
 import { ActionError, type QuoteService } from '../app/service.ts';
 import type { IncomingEmail } from '../domain/email.ts';
+import { computeMetrics } from '../app/metrics.ts';
+import { dashboardPage } from './dashboard.ts';
 import { notFoundPage, pastePage, queuePage, requestPage, type PageContext } from './views.ts';
 
 export interface ServerOptions {
@@ -81,6 +83,7 @@ export function createAppServer({ service, mode, resetDemo }: ServerOptions): Se
     try {
       // ---- JSON API (for n8n) ----
       if (path === '/api/health' && req.method === 'GET') return sendJson(res, 200, { ok: true, mode });
+      if (path === '/api/metrics' && req.method === 'GET') return sendJson(res, 200, computeMetrics(store.list(), store.events()));
       if (path === '/api/requests' && req.method === 'POST') {
         if (!req.headers['content-type']?.startsWith('application/json')) {
           return sendJson(res, 415, { error: 'Send JSON (Content-Type: application/json)' });
@@ -106,6 +109,7 @@ export function createAppServer({ service, mode, resetDemo }: ServerOptions): Se
       // ---- Pages ----
       if (req.method === 'GET') {
         if (path === '/') return send(res, 200, queuePage(store.list(), ctx));
+        if (path === '/dashboard') return send(res, 200, dashboardPage(computeMetrics(store.list(), store.events()), ctx));
         if (path === '/new' && mode === 'live') return send(res, 200, pastePage(ctx));
         if (requestMatch && !requestMatch[2]) {
           const r = store.get(requestMatch[1]!);
