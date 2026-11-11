@@ -8,4 +8,3 @@ data/app*.db*
 outbox/
 server.pid
 .n8n/
-docs/como-explicar.md
