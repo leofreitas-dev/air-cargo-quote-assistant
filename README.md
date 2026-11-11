@@ -133,4 +133,13 @@ test/            Vitest
 - Nothing is ever emailed: approving a reply writes it to `outbox/`.
 - The approval tool listens on 127.0.0.1 only and has no login. It is a local demo, not a hosted product.
 
-A portfolio project by Leonardo. Built with AI agents (Claude Code) under my direction.
+## About
+
+Built by Leonardo Freitas. I build AI automations that don't break: quote desks, lead intake, n8n workflows, self-hosted or cloud.
+
+If your team still answers quote requests or leads by hand from the inbox, get in touch.
+
+- Email: leonardofreitasdev06@gmail.com
+- GitHub: https://github.com/leofreitas-dev
+
+Built with AI agents (Claude Code) under my direction.
