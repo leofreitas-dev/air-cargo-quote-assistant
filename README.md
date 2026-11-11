@@ -97,6 +97,10 @@ For a client who already runs n8n, `n8n/quote-intake.workflow.json` watches the 
 
 ![n8n workflow](docs/screenshots/n8n-workflow.png)
 
+![n8n execution of a test email](docs/screenshots/n8n-execution.png)
+
+*A test email the demo has no recorded AI answer for: the engine put it in the error queue, so n8n took the alert branch. (Slack is off in the export.)*
+
 ## Live mode (real AI)
 
 ```
