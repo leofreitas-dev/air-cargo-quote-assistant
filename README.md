@@ -4,6 +4,8 @@ Freight forwarders still answer air cargo quote requests by hand: read the email
 
 [![CI](https://github.com/leofreitas-dev/air-cargo-quote-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/leofreitas-dev/air-cargo-quote-assistant/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Node 24+](https://img.shields.io/badge/node-24%2B-brightgreen.svg)](https://nodejs.org)
 
+https://github.com/user-attachments/assets/dfb30208-d435-4d47-a08a-ca53b427aac0
+
 - **AI reads** the email (any wording, cm or inches, kg or lb) and **writes** the friendly sentences of the reply.
 - **Code computes** every number: chargeable weight, weight break, surcharges, total. Covered by tests.
 - **A person approves** every reply. Dangerous goods, missing data and low AI confidence always go to review, with the reason on screen.
