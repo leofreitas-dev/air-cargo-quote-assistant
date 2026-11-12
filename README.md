@@ -139,6 +139,7 @@ Built by Leonardo Freitas. I build AI automations that don't break: quote desks,
 
 If your team still answers quote requests or leads by hand from the inbox, get in touch.
 
+- Book a 20-min intro call: https://cal.com/leofreitas-dev/intro
 - Email: leonardofreitasdev06@gmail.com
 - GitHub: https://github.com/leofreitas-dev
 
