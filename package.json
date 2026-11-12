@@ -1,6 +1,6 @@
 {
-  "name": "air-cargo-quote",
-  "version": "0.1.0",
+  "name": "air-cargo-quote-assistant",
+  "version": "1.0.0",
   "description": "Reads air cargo quote requests from email, extracts details with AI, prices them with tested code, and queues a reply for human approval.",
   "scripts": {
     "test": "vitest run",
