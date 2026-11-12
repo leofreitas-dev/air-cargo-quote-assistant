@@ -156,3 +156,7 @@ If your team still answers quote requests or leads by hand from the inbox, get i
 - GitHub: https://github.com/leofreitas-dev
 
 Built with AI agents (Claude Code) under my direction.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
