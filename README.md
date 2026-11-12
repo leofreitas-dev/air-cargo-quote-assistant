@@ -12,6 +12,8 @@ Runs without an API key: demo mode replays recorded answers from the real AI.
 
 ![Approval queue](docs/screenshots/approval-queue.png)
 
+*The urgent request is listed first, then the two held for review. One of them has no total: its weight is missing. Approved and closed requests are listed under Done.*
+
 ## Try it in two minutes
 
 Requires Node 24 or later. No API key, no database server, no n8n needed.
@@ -52,6 +54,8 @@ A request with dangerous goods: the reason for review at the top, the original e
 
 ![Request with dangerous goods](docs/screenshots/request-dangerous-goods.png)
 
+*The review reason at the top, the AI's confidence for each field, the chargeable weight (85 kg: the actual weight is higher than the volumetric one), and the "I checked" box that approval requires.*
+
 ## Every error path has an exit
 
 | Situation | What happens |
@@ -69,6 +73,8 @@ A request with dangerous goods: the reason for review at the top, the original e
 | Not a quote request (a payment confirmation) | No draft; a person decides. |
 
 ![Request with missing weight](docs/screenshots/request-missing-weight.png)
+
+*No weight in the email, so no price. The draft asks for the gross weight and lists what is already known. The cargo type is flagged at 70% confidence.*
 
 ## Pricing
 
@@ -93,11 +99,15 @@ The AI is Claude Haiku (the cheapest model that does the job). Reading and draft
 
 ![Dashboard](docs/screenshots/dashboard.png)
 
+*The demo after 5 decisions: 4 of 10 requests needed review, 1 of 3 approved replies was edited, and the AI cost is shown per request (US$ 0.0059 for all 10).*
+
 ## n8n integration
 
 For a client who already runs n8n, `n8n/quote-intake.workflow.json` watches the mailbox (IMAP), hands each email to the engine's API and posts an alert (Slack, optional) when a request is urgent, needs review or lands in the error queue. n8n only orchestrates; all logic stays in the engine, so there is one copy of it. Details in [n8n/README.md](n8n/README.md).
 
 ![n8n workflow](docs/screenshots/n8n-workflow.png)
+
+*Two triggers (IMAP, off in the export, and a test webhook) feed one call to the engine. The error branch handles an engine that does not answer.*
 
 ![n8n execution of a test email](docs/screenshots/n8n-execution.png)
 
